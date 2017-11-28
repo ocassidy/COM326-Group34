@@ -2,7 +2,7 @@
 * Main.cpp
 *
 * Version information v0.1
-* Authors: <Insert group member names and IDs>
+* Authors: <Oisin Cassidy, Ciaran Moore, Diarmuid Bryson, Chantelle Green>
 * Date: 24/11/2017
 * Description: Main source file for assignment two
 * Copyright notice
