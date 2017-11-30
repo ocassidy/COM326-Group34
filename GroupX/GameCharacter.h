@@ -7,11 +7,11 @@
 * Description: header file for GameCharacter class
 * Copyright notice
 */
-#include "CharacterState.h"
+
 #include <string>
 #include <vector>
 
-enum CharacterState { Idle, Running, Sleeping, Walking, Defending, Dead };
+enum class CharacterState { Idle, Running, Sleeping, Walking, Defending, Dead };
 
 #pragma once
 class GameCharacter {
