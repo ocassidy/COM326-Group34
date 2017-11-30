@@ -11,6 +11,8 @@
 #include <string>
 #include <vector>
 
+enum CharacterState { Idle, Running, Sleeping, Walking, Defending, Dead };
+
 #pragma once
 class GameCharacter {
 
