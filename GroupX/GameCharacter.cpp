@@ -2,7 +2,7 @@
 * GameCharacter.cpp
 *
 * Version information v0.1
-* Authors: <Insert group member names and IDs> of student(s) who write each class
+* Authors: <Diarmuid Bryson - B00709477 & Ciaran Moore - 
 * Date: 24/11/2017
 * Description: Implementation for GameCharacter class
 * Copyright notice
@@ -101,7 +101,7 @@ void GameCharacter::Sleep() {
 }
 
 Weapon GameCharacter::GetWeapon(int index) {
-
+	return 
 }
 
 Armour GameCharacter::GetArmour(int index) {
@@ -129,9 +129,9 @@ bool GameCharacter::EquipWeapon(int weapon) {
 }
 
 void GameCharacter::AddFood(int amount) {
-
+	food_ = food_ + amount;
 }
 
 void GameCharacter::Eat() {
-
+	food_ = (food_ * 0.8);
 }
