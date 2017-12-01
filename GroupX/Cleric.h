@@ -15,7 +15,7 @@ public:
 
 	//Custom Constructor
 	Cleric(std::string characterName, float health, float weightLimit,
-		int weapon, int armour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, int pietyLevel);
+		int equippedWeapon, int equippedArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, int pietyLevel);
 
 	void PrayFor(GameCharacter &charcter);
 

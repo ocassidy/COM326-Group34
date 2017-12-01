@@ -50,9 +50,6 @@
     <ClInclude Include="Orc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Weaponry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Armour.h">
       <Filter>Header Files</Filter>
     </ClInclude>

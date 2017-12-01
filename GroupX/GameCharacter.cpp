@@ -17,7 +17,7 @@ GameCharacter::GameCharacter(){
 
 GameCharacter::GameCharacter(std::string characterName, float health, float weightLimit,
 	int equippedWeapon, int equippedArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state)
-	: characterName_{ characterName }, health_{ health }, weightLimit_{ weightLimit }, weapon_{ weapon }, armour_{ armour }
+	: characterName_{ characterName }, health_{ health }, weightLimit_{ weightLimit }, weapon_{ equippedWeapon }, armour_{ equippedArmour }
 	, weapons_{ weapons }, armour_{ armour }, food_{ food }, state_{ state }) {}//need to finish this 
 
 

@@ -8,9 +8,14 @@ BlackWitch::BlackWitch(std::string characterName, float health, float weightLimi
 
 }
 
-
-
 bool BlackWitch::Attack(GameCharacter & charcter){
+	
+	if (equippedWeapon == 0) {
+
+	}
+	
+	
+	
 	return false;
 }
 

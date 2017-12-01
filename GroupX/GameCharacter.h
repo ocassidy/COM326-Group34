@@ -20,8 +20,8 @@ private:
 	std::string characterName_;
 	float health_;
 	float weightLimit_;
-	int weapon_;
-	int armour_;
+	int equippedWeapon_;
+	int equippedarmour_;
 	std::vector<Weapon> weapons_;
 	std::vector<Armour> armour_;
 	int food_;
@@ -33,7 +33,7 @@ public:
 
 	//Custom Constructor
 	GameCharacter(std::string characterName, float health, float weightLimit, 
-		int weapon, int armour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state);
+		int equippedweapon, int equippedarmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state);
 
 	~GameCharacter();
 

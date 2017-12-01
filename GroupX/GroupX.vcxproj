@@ -163,7 +163,6 @@
     <ClInclude Include="GameCharacter.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Orc.h" />
-    <ClInclude Include="Weaponry.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
