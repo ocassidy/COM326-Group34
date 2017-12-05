@@ -148,12 +148,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Armour.cpp" />
     <ClCompile Include="BlackWitch.cpp" />
     <ClCompile Include="Brawler.cpp" />
     <ClCompile Include="Cleric.cpp" />
     <ClCompile Include="GameCharacter.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Orc.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Armour.h" />
@@ -163,6 +166,7 @@
     <ClInclude Include="GameCharacter.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Orc.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
