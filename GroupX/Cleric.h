@@ -1,3 +1,12 @@
+/*
+* Cleric.h
+*
+* Version information v0.1
+* Authors: Oisin Cassidy
+* Date: 30/11/2017
+* Description: header file for Cleric class
+* Copyright notice
+*/
 #pragma once
 
 #include "GameCharacter.h"

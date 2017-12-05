@@ -1,3 +1,12 @@
+/*
+* Orc.h
+*
+* Version information v0.1
+* Authors: Oisin Cassody
+* Date: 24/11/2017
+* Description: header file for Orc class
+* Copyright notice
+*/
 #pragma once
 
 #include "GameCharacter.h"
