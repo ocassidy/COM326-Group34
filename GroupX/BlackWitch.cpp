@@ -8,13 +8,23 @@ BlackWitch::BlackWitch(std::string characterName, float health, float weightLimi
 
 }
 
+void BlackWitch::SetMagicProficiency(std::string magicProficiency)
+{
+	magicProficiency_ = magicProficiency;
+}
+
+std::string BlackWitch::GetMagicProficiency() const
+{
+	return magicProficiency_;
+}
+
 bool BlackWitch::Attack(GameCharacter & charcter){
 	
-	if (equippedWeapon == 0) {
+	//if (equippedWeapon == 0) {
 
-	}
-	
-	
+	//}
+	//
+	//
 	
 	return false;
 }
