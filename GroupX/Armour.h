@@ -12,7 +12,7 @@ private:
 
 public:
 	Armour();
-	Armour(std::string itemName, int itemValue, float weight, std::string armourName, int value, int armourHealth, int defence, ArmourType ArmourType);
+	Armour(std::string itemName, int itemValue, float weight, int armourHealth, int defence, ArmourType ArmourType);
 
 	//setters
 	void setDefence(int defence);
@@ -20,5 +20,5 @@ public:
 
 	//getters
 	int getDefence()const;
-	int getarmourHealth()const;
+	int getArmourHealth()const;
 };
