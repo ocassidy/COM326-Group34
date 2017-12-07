@@ -7,7 +7,7 @@ Brawler::Brawler(std::string characterName, float health, float weightLimit, int
 	weapon, armour, weapons, armour, food, state), punchDamage_{ punchDamage }, strength_{ strength } {
 }
 
-bool Brawler::Attack(GameCharacter & charcter){
+bool Brawler::Attack(GameCharacter & charcter) {
 	return false;
 }
 

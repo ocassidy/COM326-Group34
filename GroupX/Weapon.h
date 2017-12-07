@@ -21,10 +21,4 @@ public:
 	 int getWeaponHitStrength() const;
 	 int getWeaponHealth()const;
 
-
-
-
-
-
-
 };
