@@ -10,9 +10,14 @@
 #pragma once
 
 #include "GameCharacter.h"
+#include "Weapon.h"
+#include "Item.h"
+#include "Armour.h"
 #include <string>
+#include <iostream>
+#include <random>
+#include <vector>
 
-#pragma once
 class Orc : public GameCharacter {
 
 private:
@@ -27,8 +32,14 @@ public:
 	Orc(std::string characterName, float health, float weightLimit,
 		int equippedWeapon, int equippedArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, int ferociousness, int strength);
 
-	virtual bool Attack(GameCharacter &charcter) override;
+	void SetFeroiousness(int ferociousness);
+	int GetFeroiousness() const;
 
-	void Scream(GameCharacter &charcter);
+	void SetStrength(int strength);
+	int GetStrength() const;
+
+	virtual bool Attack(GameCharacter &character) override;
+
+	void Scream(GameCharacter &character);
 
 };

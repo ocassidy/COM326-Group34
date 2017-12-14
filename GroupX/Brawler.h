@@ -8,11 +8,15 @@
 * Copyright notice
 */
 #pragma once
-
 #include "GameCharacter.h"
+#include "Weapon.h"
+#include "Item.h"
+#include "Armour.h"
 #include <string>
+#include <iostream>
+#include <random>
+#include <vector>
 
-#pragma once
 class Brawler : public GameCharacter {
 
 private:
@@ -27,10 +31,13 @@ public:
 	Brawler(std::string characterName, float health, float weightLimit,
 		int equippedWeapon, int equippedArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, std::string punchDamage, int strength);
 
-	void SetP
+	void SetPunchDamage(std::string punchDamage);
+	std::string GetPunchDamage() const;
+
+	void SetStrength(int strength);
+	int GetStrength() const;
 
 	virtual bool Attack(GameCharacter &charcter) override;
 
 	void Brawl(GameCharacter &charcter);
-
 };

@@ -7,10 +7,7 @@
 * Description: Implementation for GameCharacter class
 * Copyright notice
 */
-#include <string>
-#include <iostream>
-#include <random>
-#include <ctime>
+
 #include "GameCharacter.h"
 #include "Item.h"
 #include "Weapon.h"
@@ -19,8 +16,6 @@
 #include "Brawler.h"
 #include "Cleric.h"
 #include "Orc.h"
-
-
 
 GameCharacter::GameCharacter() {
 }
@@ -31,11 +26,10 @@ GameCharacter::GameCharacter(std::string characterName, float health, float weig
 	, weapons_{ weapons }, armour_{ armour }, food_{ food }, state_{ state } {
 }
 
-
 GameCharacter::~GameCharacter() {
 }
 
-std::string GameCharacter::SetCharacterName(std::string name) {
+void GameCharacter::SetCharacterName(std::string name) {
 	characterName_ = name;
 }
 
@@ -59,7 +53,6 @@ float GameCharacter::GetWeightLimit() const {
 	return weightLimit_;
 }
 
-
 void GameCharacter::SetEquippedWeapon(int eqweapon) {
 	equippedWeapon_ = eqweapon;
 }
@@ -76,6 +69,16 @@ int GameCharacter::GetEquippedArmour() const {
 	return equippedArmour_;
 }
 
+std::vector<Weapon> GameCharacter::GetWeapons() const
+{
+	return weapons_;
+}
+
+std::vector<Armour> GameCharacter::GetArmour() const
+{
+	return armour_;
+}
+
 void GameCharacter::SetFood(int food) {
 	food_ = food;
 }
@@ -84,14 +87,13 @@ int GameCharacter::GetFood() const {
 	return food_;
 }
 
-CharacterState GameCharacter::SetState(CharacterState state) {
+void GameCharacter::SetState(CharacterState state) {
 	state_ = state;
 }
 
 CharacterState GameCharacter::GetState() {
 	return state_;
 }
-
 
 bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
 
@@ -105,7 +107,6 @@ bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
 	std::mt19937 gen(rd());
 	std::uniform_real_distribution<> dis(0, 100);
 
-
 	std::random_device rd2; //generator 2
 	std::mt19937 gen2(rd2());
 	std::uniform_real_distribution<> dis2(10, 20);
@@ -113,12 +114,9 @@ bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
 	x = dis(gen);
 	y = dis2(gen2);
 
-
 	if (equippedWeapon_ == -1 || health_ <= 20 || character.GetState() == Dead) {
 		return false;
-
 	}
-
 
 	if (Weapon().getWeaponHitStrength() < Armour().getDefence()) {
 		if (x > 0 && x <= 20) { //successful attack
@@ -160,8 +158,6 @@ bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
 		return true;
 	}
 
-
-
 	if (x > 20 && x <= 100) { //unsuccessful attack + no damage
 		double WepHealth = Weapon().getWeaponHealth();
 		double removal = WepHealth / 100 * y;
@@ -169,20 +165,16 @@ bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
 		int newHP = newHealth; //rounding the double value down to int so it can be passed through without error
 		Weapon().setWeaponHealth(newHP);
 
-
 		for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) //removal of weapon if its health is less than or equal to 0
 		{
 			if (Weapon().getWeaponHealth() <= 0) {
 				weapons_.erase(weapons_.begin() + i);
 			}
 		}
-
 		return true;
 	}
 
-
-	if (Weapon().getWeaponHitStrength() >= Armour().getDefence())
-	{
+	if (Weapon().getWeaponHitStrength() >= Armour().getDefence()) {
 		if (x > 0 && x <= 60) { //successful attack
 
 			switch (state_) { //determining damage output
@@ -219,7 +211,6 @@ bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
 			}
 			return true;
 		}
-
 	}
 
 	if (x > 60 && x <= 100) { //unsuccessful attack + no damage
@@ -238,9 +229,7 @@ bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
 		return true;
 	}
 
-
 	if (character.equippedArmour_ == -1) {
-
 		if (x > 0 && x <= 80) { //successful attack
 			switch (state_) { //determining damage output
 			case Defending:
@@ -269,7 +258,6 @@ bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
 		return true;
 	}
 
-
 	if (x > 80 && x <= 100) { //unsuccessful attack + no damage
 		double WepHealth = Weapon().getWeaponHealth();
 		double removal = WepHealth / 100 * y;
@@ -277,22 +265,15 @@ bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
 		int newHP = newHealth; //rounding the double value down to int so it can be passed through without error
 		Weapon().setWeaponHealth(newHP);
 
-
-
 		for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) //removal of weapon if its health is less than or equal to 0
 		{
 			if (Weapon().getWeaponHealth() <= 0) {
 				weapons_.erase(weapons_.begin() + i);
 			}
 		}
-
 		return true;
-
 	}
-
 }
-
-
 
 void GameCharacter::Defend(int armour) { //need to review this
 
@@ -301,11 +282,9 @@ void GameCharacter::Defend(int armour) { //need to review this
 	if (armour < armour_.size() && armour >= 0) {
 		equippedArmour_ = armour;
 	}
-
 	else {
 		equippedArmour_ = -1;
 	}
-
 }
 
 void GameCharacter::Walk() {
@@ -356,8 +335,6 @@ bool GameCharacter::PickUpWeapon(Weapon &weapon) {
 	else {
 		return false;
 	}
-
-
 }
 
 bool GameCharacter::PickUpArmour(Armour &Armour) {
@@ -391,8 +368,6 @@ void GameCharacter::DropItem(Armour &Armour) {
 
 	//	value weight name
 
-
-
 }
 
 void GameCharacter::DropItem(Weapon &weapon) {
@@ -400,7 +375,7 @@ void GameCharacter::DropItem(Weapon &weapon) {
 }
 
 bool GameCharacter::EquipWeapon(int weapon) {
-
+	return weapon;
 }
 
 void GameCharacter::AddFood(int amount) {

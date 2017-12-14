@@ -9,11 +9,15 @@
 */
 
 #pragma once
-
 #include "GameCharacter.h"
+#include "Weapon.h"
+#include "Item.h"
+#include "Armour.h"
 #include <string>
+#include <iostream>
+#include <random>
+#include <vector>
 
-#pragma once
 class BlackWitch : public GameCharacter {
 
 private:
@@ -31,8 +35,11 @@ public:
 	void SetMagicProficiency(std::string magicProficiency);
 	std::string GetMagicProficiency() const;
 
-	virtual bool Attack(GameCharacter &charcter) override;
+	void SetDarkPower(int darkPower);
+	int GetDarkPower() const;
 
-	void Bewitch(GameCharacter &charcter);
+	virtual bool Attack(GameCharacter &character) override;
+
+	void Bewitch(GameCharacter &character);
 
 };

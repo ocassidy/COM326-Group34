@@ -7,12 +7,17 @@
 * Description: header file for Cleric class
 * Copyright notice
 */
-#pragma once
 
+#pragma once
 #include "GameCharacter.h"
+#include "Weapon.h"
+#include "Item.h"
+#include "Armour.h"
 #include <string>
+#include <iostream>
+#include <random>
+#include <vector>
 
-#pragma once
 class Cleric : public GameCharacter {
 
 private:
@@ -26,6 +31,11 @@ public:
 	Cleric(std::string characterName, float health, float weightLimit,
 		int equippedWeapon, int equippedArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, int pietyLevel);
 
-	void PrayFor(GameCharacter &charcter);
+	void SetPietyLevel(int pietyLevel);
+	int GetPietyLevel() const;
+
+	virtual bool Attack(GameCharacter &character) override;
+
+	void PrayFor(GameCharacter &character);
 
 };

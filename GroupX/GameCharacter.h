@@ -8,15 +8,18 @@
 * Copyright notice
 */
 
-#include <string>
+#pragma once
 #include <vector>
+#include <string>
+#include <iostream>
+#include <random>
+#include <ctime>
 #include "Weapon.h"
 #include "Item.h"
 #include "Armour.h"
 
 enum CharacterState { Idle, Running, Sleeping, Walking, Defending, Dead }; //character states
 
-#pragma once
 class GameCharacter {
 
 private:
@@ -42,7 +45,7 @@ public:
 	~GameCharacter();
 
 	//get and set character name
-	std::string SetCharacterName(std::string name);
+	void SetCharacterName(std::string name);
 	std::string GetCharacterName() const;
 
 	//get and set health
@@ -68,12 +71,11 @@ public:
 	int GetFood() const;
 
 	//get and set character state
-	CharacterState SetState(CharacterState state);
+	void SetState(CharacterState state);
 	CharacterState GetState();
 
-
 	//attack logic
-	virtual bool Attack(GameCharacter &character);
+	virtual bool Attack(GameCharacter &character)=0;
 
 	//character states
 	void Defend(int armour);
