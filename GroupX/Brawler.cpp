@@ -52,7 +52,7 @@ bool Brawler::Attack(GameCharacter &character) {
 	if (Weapon().getWeaponHitStrength() < Armour().getDefence()) {
 		if (x > 0 && x <= 20) { //successful attack
 
-			switch (Brawler::GetState()) { //determining damage output
+			switch (character.GetState()) { //determining damage output
 			case Defending:
 				newHealth = character.GetHealth() * 0.9;
 				character.SetHealth(newHealth);
@@ -110,7 +110,7 @@ bool Brawler::Attack(GameCharacter &character) {
 	{
 		if (x > 0 && x <= 60) { //successful attack
 
-			switch (Brawler::GetState()) { //determining damage output
+			switch (character.GetState()) { //determining damage output
 			case Defending:
 				newHealth = character.GetHealth() * 0.9;
 				character.SetHealth(newHealth);
