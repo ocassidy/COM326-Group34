@@ -21,6 +21,8 @@ void Brawler::SetStrength(int strength) {
 
 int Brawler::GetStrength() const {
 	return strength_;
+
+	GameCharacter::Sleep().br
 }
 
 bool Brawler::Attack(GameCharacter &character) {

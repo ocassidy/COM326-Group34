@@ -95,6 +95,8 @@ CharacterState GameCharacter::GetState() {
 	return state_;
 }
 
+//all above is get / set
+
 bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
 
 	SetState(Idle); //setting character state to idle
@@ -279,11 +281,16 @@ void GameCharacter::Defend(int armour) { //need to review this
 
 	SetState(Defending); //setting character state to defending
 
-	if (armour < armour_.size() && armour >= 0) {
-		equippedArmour_ = armour;
-	}
-	else {
-		equippedArmour_ = -1;
+	for (std::vector<int>::size_type i = 0; i != armour_.size(); i++){
+
+		if (armour < armour_.size() && armour >= 0) {
+			equippedArmour_ = armour;
+			return;
+		}
+		else {
+			equippedArmour_ = -1;
+			return;
+		}
 	}
 }
 
@@ -300,6 +307,31 @@ void GameCharacter::Run() {
 void GameCharacter::Sleep() {
 
 	SetState(Sleeping);
+
+	//brawler 20% health increase
+	float bhealth = Brawler().GetHealth() * 1.2;
+	if (bhealth > 100.f) {
+		bhealth == 100.f;
+	}		
+
+	//cleric 20% health increase
+	float chealth = Cleric().GetHealth() * 1.2;
+	if (chealth > 100.f) {
+		chealth == 100.f;
+	}
+
+	//Blackwitch 15% health increase
+	float bwhealth = BlackWitch().GetHealth() * 1.15;
+	if (bwhealth > 100.f) {
+		bwhealth == 100.f;
+	}
+
+	//Orc 15% health increase
+	float ohealth = Orc().GetHealth() * 1.15;
+	if (ohealth > 100.f) {
+		ohealth == 100.f;
+	}
+
 }
 
 Weapon GameCharacter::GetWeapon(int index) {
@@ -366,16 +398,51 @@ bool GameCharacter::PickUpArmour(Armour &Armour) {
 
 void GameCharacter::DropItem(Armour &Armour) {
 
+	for (std::vector<int>::size_type i = 0; i != armour_.size(); i++) {
+
+		if (Armour.getItemName() == armour_[i].getItemName()) {
+			if (Armour.getWeight() == armour_[i].getWeight()) {
+				if (Armour.getItemValue() == armour_[i].getItemValue())	{
+					armour_.erase(armour_.begin() + i);
+					return;
+				}
+
+			}
+		}
+	}
+
 	//	value weight name
 
 }
 
 void GameCharacter::DropItem(Weapon &weapon) {
 
+	for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) {
+
+		if (weapon.getItemName() == weapons_[i].getItemName()) {
+			if (weapon.getWeight() == weapons_[i].getWeight()) {
+				if (weapon.getItemValue() == weapons_[i].getItemValue()) {
+					weapons_.erase(weapons_.begin() + i);
+					return;
+				}
+
+			}
+		}
+	}
 }
 
-bool GameCharacter::EquipWeapon(int weapon) {
-	return weapon;
+bool GameCharacter::EquipWeapon(int weapon) { //like defend / need to review with unit tests
+	for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) {
+
+		if (weapon < weapons_.size() && weapon >= 0) {
+			equippedWeapon_ = weapon;
+			return;
+		}
+		else {
+			equippedWeapon_ = -1;
+			return;
+		}
+	}
 }
 
 void GameCharacter::AddFood(int amount) {
@@ -383,5 +450,21 @@ void GameCharacter::AddFood(int amount) {
 }
 
 void GameCharacter::Eat() {
-	food_ = (food_ * 0.8);
+
+	int foodate = food_ * 0.8;
+	float addhealth = (food_ - foodate) * 0.25;
+
+	if (health_ == 100.f)
+	{
+		//null
+	}
+	else
+	{
+		health_ = health_ + addhealth;
+		if (health_ > 100.f) {
+			health_ == 100;
+		}
+	}
+	
+
 }
