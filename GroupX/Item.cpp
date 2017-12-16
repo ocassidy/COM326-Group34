@@ -32,7 +32,6 @@ void Item::setWeight(float Weight) {
 }
 
 //getters
-
 std::string Item::getItemName() {
 	return itemName_;
 }

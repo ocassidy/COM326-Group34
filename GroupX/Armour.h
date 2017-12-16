@@ -3,6 +3,7 @@
 #include "Item.h"
 
 enum class ArmourType {Cardboard, Leather, Wood, Iron, Steel};
+
 class Armour : public Item
 {
 private:
@@ -21,4 +22,7 @@ public:
 	//getters
 	int getDefence()const;
 	int getArmourHealth()const;
+
+	void SetArmourType(ArmourType ArmourType);
+	ArmourType GetArmourType() const;
 };

@@ -20,7 +20,7 @@ bool Cleric::Attack(GameCharacter &character) {
 
 	int y; //Weapon health deterioration 
 	int x; //attack chance
-	int newHealth = 0;
+	float newHealth = 0;
 
 	std::random_device rd; //generator 1
 	std::mt19937 gen(rd());
@@ -33,14 +33,14 @@ bool Cleric::Attack(GameCharacter &character) {
 	x = dis(gen);
 	y = dis2(gen2);
 
-	if (Cleric::GetEquippedWeapon() == -1 || Cleric::GetHealth() <= 20 || Cleric::GetState() == Dead) {
+	if (GetEquippedWeapon() == -1 || GetHealth() <= 20 || GetState() == Dead) {
 		return false;
 	}
 
 	if (Weapon().getWeaponHitStrength() < Armour().getDefence()) {
 		if (x > 0 && x <= 20) { //successful attack
 
-			switch (Cleric::GetState()) { //determining damage output
+			switch (GetState()) { //determining damage output
 			case Defending:
 				newHealth = character.GetHealth() * 0.9;
 				character.SetHealth(newHealth);
@@ -64,13 +64,13 @@ bool Cleric::Attack(GameCharacter &character) {
 				character.SetHealth(newHealth);
 				break;
 			}
-			int newArmourHealth = character.GetArmour().at(character.GetEquippedArmour()).getArmourHealth() * 0.9;
+			float newArmourHealth = character.GetArmour().at(character.GetEquippedArmour()).getArmourHealth() * 0.9;
 			character.GetArmour().at(character.GetEquippedArmour()).setArmourHealth(newArmourHealth);
 
-			for (std::vector<int>::size_type i = 0; i != Cleric::GetWeapons().size(); i++) //removal of Armor if its health is less than or equal to 0
+			for (std::vector<int>::size_type i = 0; i != GetWeapons().size(); i++) //removal of Armor if its health is less than or equal to 0
 			{
 				if (Armour().getArmourHealth() <= 0) {
-					Cleric::GetArmour().erase(Cleric::GetArmour().begin() + i);
+					GetArmour().erase(GetArmour().begin() + i);
 				}
 			}
 		}
@@ -81,14 +81,14 @@ bool Cleric::Attack(GameCharacter &character) {
 		double WepHealth = Weapon().getWeaponHealth();
 		double removal = WepHealth / 100 * y;
 		double newHealth = WepHealth - removal;
-		int newHP = newHealth; //rounding the double value down to int so it can be passed through without error
+		float newHP = newHealth; //rounding the double value down to int so it can be passed through without error
 		Weapon().setWeaponHealth(newHP);
 
 
-		for (std::vector<int>::size_type i = 0; i != Cleric::GetWeapons().size(); i++) //removal of weapon if its health is less than or equal to 0
+		for (std::vector<int>::size_type i = 0; i != GetWeapons().size(); i++) //removal of weapon if its health is less than or equal to 0
 		{
 			if (Weapon().getWeaponHealth() <= 0) {
-				Cleric::GetWeapons().erase(Cleric::GetWeapons().begin() + i);
+				GetWeapons().erase(GetWeapons().begin() + i);
 			}
 		}
 		return true;
@@ -98,7 +98,7 @@ bool Cleric::Attack(GameCharacter &character) {
 	{
 		if (x > 0 && x <= 60) { //successful attack
 
-			switch (Cleric::GetState()) { //determining damage output
+			switch (GetState()) { //determining damage output
 			case Defending:
 				newHealth = character.GetHealth() * 0.9;
 				character.SetHealth(newHealth);
@@ -121,7 +121,7 @@ bool Cleric::Attack(GameCharacter &character) {
 				character.SetHealth(newHealth);
 				break;
 			}
-			int newArmourHealth = character.GetArmour().at(character.GetEquippedArmour()).getArmourHealth() * 0.9;
+			float newArmourHealth = character.GetArmour().at(character.GetEquippedArmour()).getArmourHealth() * 0.9;
 			character.GetArmour().at(character.GetEquippedArmour()).setArmourHealth(newArmourHealth);
 
 			for (std::vector<int>::size_type i = 0; i != character.GetWeapons().size(); i++) //removal of weapon if its health is less than or equal to 0
@@ -138,13 +138,43 @@ bool Cleric::Attack(GameCharacter &character) {
 		double WepHealth = Weapon().getWeaponHealth();
 		double removal = WepHealth / 100 * y;
 		double newHealth = WepHealth - removal;
-		int newHP = newHealth; //rounding the double value down to int so it can be passed through without error
+		float newHP = newHealth; //rounding the double value down to int so it can be passed through without error
 		Weapon().setWeaponHealth(newHP);
 
-		for (std::vector<int>::size_type i = 0; i != Cleric::GetWeapons().size(); i++) //removal of weapon if its health is less than or equal to 0
+		for (std::vector<int>::size_type i = 0; i != GetWeapons().size(); i++) //removal of weapon if its health is less than or equal to 0
 		{
 			if (Weapon().getWeaponHealth() <= 0) {
-				Cleric::GetWeapons().erase(Cleric::GetWeapons().begin() + i);
+				GetWeapons().erase(GetWeapons().begin() + i);
+			}
+		}
+		return true;
+	}
+
+	if (character.GetEquippedArmour() == -1) {
+
+		if (x > 0 && x <= 80) { //successful attack
+			switch (GetState()) { //determining damage output
+			case Defending:
+				newHealth = character.GetHealth() * 0.9;
+				character.SetHealth(newHealth);
+				break;
+			case Sleeping:
+				character.SetHealth(0);
+				break;
+			case Dead:
+				//no effect
+			case Walking:
+				newHealth = character.GetHealth() * 0.8;
+				character.SetHealth(newHealth);
+				break;
+			case Running:
+				newHealth = character.GetHealth() * 0.8;
+				character.SetHealth(newHealth);
+				break;
+			case Idle:
+				newHealth = character.GetHealth() * 0.8;
+				character.SetHealth(newHealth);
+				break;
 			}
 		}
 		return true;
@@ -184,7 +214,7 @@ bool Cleric::Attack(GameCharacter &character) {
 		double WepHealth = Weapon().getWeaponHealth();
 		double removal = WepHealth / 100 * y;
 		double newHealth = WepHealth - removal;
-		int newHP = newHealth; //rounding the double value down to int so it can be passed through without error
+		float newHP = newHealth; //rounding the double value down to int so it can be passed through without error
 		Weapon().setWeaponHealth(newHP);
 
 		for (std::vector<int>::size_type i = 0; i != Cleric::GetWeapons().size(); i++) //removal of weapon if its health is less than or equal to 0

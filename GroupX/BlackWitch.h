@@ -21,7 +21,7 @@
 class BlackWitch : public GameCharacter {
 
 private:
-	std::string magicProficiency_;
+	int magicProficiency_;
 	int darkPower_;
 
 public:
@@ -30,10 +30,10 @@ public:
 
 	//Custom Constructor
 	BlackWitch(std::string characterName, float health, float weightLimit,
-		int equippedWeapon, int equippedArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, std::string magicProficiency, int darkPower);
+		int equippedWeapon, int equippedArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, int magicProficiency, int darkPower);
 
-	void SetMagicProficiency(std::string magicProficiency);
-	std::string GetMagicProficiency() const;
+	void SetMagicProficiency(int magicProficiency);
+	int GetMagicProficiency() const;
 
 	void SetDarkPower(int darkPower);
 	int GetDarkPower() const;

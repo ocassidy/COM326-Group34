@@ -20,7 +20,7 @@
 class Brawler : public GameCharacter {
 
 private:
-	std::string punchDamage_;
+	int punchDamage_;
 	int strength_;
 
 public:
@@ -29,15 +29,15 @@ public:
 
 	//Custom Constructor
 	Brawler(std::string characterName, float health, float weightLimit,
-		int equippedWeapon, int equippedArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, std::string punchDamage, int strength);
+		int equippedWeapon, int equippedArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, int punchDamage, int strength);
 
-	void SetPunchDamage(std::string punchDamage);
-	std::string GetPunchDamage() const;
+	void SetPunchDamage(int punchDamage);
+	int GetPunchDamage() const;
 
 	void SetStrength(int strength);
 	int GetStrength() const;
 
 	virtual bool Attack(GameCharacter &charcter) override;
 
-	void Brawl(GameCharacter &charcter);
+	bool Brawl(GameCharacter &charcter);
 };

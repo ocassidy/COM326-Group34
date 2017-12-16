@@ -28,6 +28,4 @@ public:
 	//get + set weight
 	void setWeight(float weight);
 	float getWeight();
-
-
 };

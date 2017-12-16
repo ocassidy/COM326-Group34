@@ -103,15 +103,15 @@ bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
 
 	int y; //Weapon health deterioration 
 	int x; //attack chance
-	int newHealth = 0;
+	float newHealth = 0;
 
 	std::random_device rd; //generator 1
 	std::mt19937 gen(rd());
-	std::uniform_real_distribution<> dis(0, 100);
+	std::uniform_real_distribution<float> dis(0, 100);
 
 	std::random_device rd2; //generator 2
 	std::mt19937 gen2(rd2());
-	std::uniform_real_distribution<> dis2(10, 20);
+	std::uniform_real_distribution<float> dis2(10, 20);
 
 	x = dis(gen);
 	y = dis2(gen2);
@@ -147,7 +147,7 @@ bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
 				character.SetHealth(newHealth);
 				break;
 			}
-			int newArmourHealth = character.armour_.at(character.equippedArmour_).getArmourHealth() * 0.9;
+			float newArmourHealth = character.armour_.at(character.equippedArmour_).getArmourHealth() * 0.9;
 			character.armour_.at(character.equippedArmour_).setArmourHealth(newArmourHealth);
 
 			for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) //removal of Armor if its health is less than or equal to 0
@@ -164,7 +164,7 @@ bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
 		double WepHealth = Weapon().getWeaponHealth();
 		double removal = WepHealth / 100 * y;
 		double newHealth = WepHealth - removal;
-		int newHP = newHealth; //rounding the double value down to int so it can be passed through without error
+		float newHP = newHealth; //rounding the double value down to int so it can be passed through without error
 		Weapon().setWeaponHealth(newHP);
 
 		for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) //removal of weapon if its health is less than or equal to 0
@@ -202,7 +202,7 @@ bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
 				character.SetHealth(newHealth);
 				break;
 			}
-			int newArmourHealth = character.armour_.at(character.equippedArmour_).getArmourHealth() * 0.9;
+			float newArmourHealth = character.armour_.at(character.equippedArmour_).getArmourHealth() * 0.9;
 			character.armour_.at(character.equippedArmour_).setArmourHealth(newArmourHealth);
 
 			for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) //removal of Armor if its health is less than or equal to 0
@@ -219,7 +219,7 @@ bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
 		double WepHealth = Weapon().getWeaponHealth();
 		double removal = WepHealth / 100 * y;
 		double newHealth = WepHealth - removal;
-		int newHP = newHealth; //rounding the double value down to int so it can be passed through without error
+		float newHP = newHealth; //rounding the double value down to int so it can be passed through without error
 		Weapon().setWeaponHealth(newHP);
 
 		for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) //removal of weapon if its health is less than or equal to 0
@@ -264,7 +264,7 @@ bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
 		double WepHealth = Weapon().getWeaponHealth();
 		double removal = WepHealth / 100 * y;
 		double newHealth = WepHealth - removal;
-		int newHP = newHealth; //rounding the double value down to int so it can be passed through without error
+		float newHP = newHealth; //rounding the double value down to int so it can be passed through without error
 		Weapon().setWeaponHealth(newHP);
 
 		for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) //removal of weapon if its health is less than or equal to 0
@@ -399,14 +399,12 @@ bool GameCharacter::PickUpArmour(Armour &Armour) {
 void GameCharacter::DropItem(Armour &Armour) {
 
 	for (std::vector<int>::size_type i = 0; i != armour_.size(); i++) {
-
 		if (Armour.getItemName() == armour_[i].getItemName()) {
 			if (Armour.getWeight() == armour_[i].getWeight()) {
 				if (Armour.getItemValue() == armour_[i].getItemValue())	{
 					armour_.erase(armour_.begin() + i);
 					return;
 				}
-
 			}
 		}
 	}
@@ -436,11 +434,11 @@ bool GameCharacter::EquipWeapon(int weapon) { //like defend / need to review wit
 
 		if (weapon < weapons_.size() && weapon >= 0) {
 			equippedWeapon_ = weapon;
-			return;
+			return true;
 		}
 		else {
 			equippedWeapon_ = -1;
-			return;
+			return false;
 		}
 	}
 }
