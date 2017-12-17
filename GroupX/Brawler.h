@@ -40,4 +40,6 @@ public:
 	virtual bool Attack(GameCharacter &charcter) override;
 
 	bool Brawl(GameCharacter &charcter);
+
+	virtual void Sleep();
 };

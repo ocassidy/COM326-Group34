@@ -42,4 +42,6 @@ public:
 
 	void Bewitch(GameCharacter &character);
 
+	virtual void Sleep();
+
 };

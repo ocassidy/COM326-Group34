@@ -42,4 +42,6 @@ public:
 
 	void Scream(GameCharacter &character);
 
+	virtual void Sleep();
+
 };

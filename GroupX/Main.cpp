@@ -11,11 +11,19 @@
 #include <iostream>
 #include <random>
 #include "GameCharacter.h"
+#include "Armour.h"
+#include "BlackWitch.h"
+#include "Brawler.h"
+#include "Cleric.h"
+#include "Item.h"
+#include "Orc.h"
+#include "Weapon.h"
 
 using namespace std;
 
 int main() {
 
+	//Brawler()
 
 	return 0;
 }

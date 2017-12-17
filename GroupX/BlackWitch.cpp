@@ -208,3 +208,10 @@ bool BlackWitch::Attack(GameCharacter &character) {
 void BlackWitch::Bewitch(GameCharacter &character) {
 	
 }
+
+void BlackWitch::Sleep() {
+	float bwhealth = BlackWitch().GetHealth() * 1.15;
+	if (bwhealth > 100.f) {
+		bwhealth == 100.f;
+	}
+}

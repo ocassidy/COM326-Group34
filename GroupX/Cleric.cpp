@@ -229,3 +229,11 @@ bool Cleric::Attack(GameCharacter &character) {
 
 void Cleric::PrayFor(GameCharacter &character) {
 }
+
+void Cleric::Sleep() {
+	//cleric 20% health increase
+	float chealth = Cleric().GetHealth() * 1.2;
+	if (chealth > 100.f) {
+		chealth == 100.f;
+	}
+}

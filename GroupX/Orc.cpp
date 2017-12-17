@@ -309,4 +309,13 @@ bool Orc::Attack(GameCharacter &character) {
 }
 
 void Orc::Scream(GameCharacter &character) {
+
+}
+
+void Orc::Sleep() {
+	//Orc 15% health increase
+	float ohealth = Orc().GetHealth() * 1.15;
+	if (ohealth > 100.f) {
+		ohealth == 100.f;
+	}
 }

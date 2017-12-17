@@ -307,31 +307,6 @@ void GameCharacter::Run() {
 void GameCharacter::Sleep() {
 
 	SetState(Sleeping);
-
-	//brawler 20% health increase
-	float bhealth = Brawler().GetHealth() * 1.2;
-	if (bhealth > 100.f) {
-		bhealth == 100.f;
-	}		
-
-	//cleric 20% health increase
-	float chealth = Cleric().GetHealth() * 1.2;
-	if (chealth > 100.f) {
-		chealth == 100.f;
-	}
-
-	//Blackwitch 15% health increase
-	float bwhealth = BlackWitch().GetHealth() * 1.15;
-	if (bwhealth > 100.f) {
-		bwhealth == 100.f;
-	}
-
-	//Orc 15% health increase
-	float ohealth = Orc().GetHealth() * 1.15;
-	if (ohealth > 100.f) {
-		ohealth == 100.f;
-	}
-
 }
 
 Weapon GameCharacter::GetWeapon(int index) {
@@ -396,6 +371,7 @@ bool GameCharacter::PickUpArmour(Armour &Armour) {
 	}
 }
 
+//method which drops the current armour item
 void GameCharacter::DropItem(Armour &Armour) {
 
 	for (std::vector<int>::size_type i = 0; i != armour_.size(); i++) {
@@ -413,6 +389,7 @@ void GameCharacter::DropItem(Armour &Armour) {
 
 }
 
+//method which drops the current weapon item
 void GameCharacter::DropItem(Weapon &weapon) {
 
 	for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) {
@@ -449,19 +426,29 @@ void GameCharacter::AddFood(int amount) {
 
 void GameCharacter::Eat() {
 
-	int foodate = food_ * 0.8;
+	float foodate = food_ * 0.8;
 	float addhealth = (food_ - foodate) * 0.25;
 
-	if (health_ == 100.f)
-	{
-		//null
-	}
-	else
-	{
+	//if (health_ == 100.f)
+	//{
+	//	return;
+	//}
+	//else
+	//{
+	//	health_ = health_ + addhealth;
+	//	if (health_ > 100.f) {
+	//		health_ == 100;
+	//	}
+	//}
+
+	if (health_ < 100.f) {
 		health_ = health_ + addhealth;
-		if (health_ > 100.f) {
-			health_ == 100;
+		if (health_ >= 100) {
+			health_ = 100;
 		}
+	}
+	else {
+
 	}
 	
 

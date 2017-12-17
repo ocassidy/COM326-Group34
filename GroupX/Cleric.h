@@ -38,4 +38,5 @@ public:
 
 	void PrayFor(GameCharacter &character);
 
+	virtual void Sleep();
 };
