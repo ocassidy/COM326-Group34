@@ -74,14 +74,26 @@ namespace UT
 			Assert::AreEqual(expectedFood, actualFood);
 		}
 
+		TEST_METHOD(AddFood)
+		{
+			int expectedFood{ 25 }, actualFood;
+			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
+
+			brawler.AddFood(5);
+			actualFood = brawler.GetFood();
+
+			Assert::AreEqual(expectedFood, actualFood);
+
+		}
+
 		TEST_METHOD(TestEatIncreasesHealth)
 		{
 
 			//	Consumes 20% of the available food. Each unit (1) of food consumed will add 0.25 units of health to the character.
 			//Tests that health increases correctly by eat function 
 			//Arrange the data
-			float expectedHealth{ 52.5f }, actualHealth; //(health should not exceed 100)
-			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
+			float expectedHealth{ 51.0f }, actualHealth; //(health should not exceed 100)
+			Brawler brawler{ "Jim", 50.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
 
 			//Act
 			brawler.Eat();
@@ -316,11 +328,11 @@ namespace Inventory_UnitTests {
 		{
 			//Test Drop weapon
 			//Arrange the data
-			std::string expectedWeaponName{ "spear" };
+			std::string expectedWeaponName{ "Spear" };
 			Brawler brawler{"Jim", 100.f, 120.f, -1, -1,{},{},20, Idle, 20, 16};
 			Weapon spear1{"Spear", 15, 25.f, 100, 6 };
 			Weapon bow{"Bow", 25, 22.f, 100, 6 };
-			Weapon spear2{"Spear", 15, 25.f, 100, 6 };
+			Weapon spear2{"Spear", 34, 54.f, 90, 16 };
 
 			brawler.PickUpWeapon(spear1);
 			brawler.PickUpWeapon(bow);
@@ -363,6 +375,26 @@ namespace Inventory_UnitTests {
 
 			//Assert
 			Assert::AreEqual(expectedArmourName, actualArmourName);
+		}
+
+		TEST_METHOD(TestArmourConstructor)
+		{
+			std::string expectedName = "Shield";
+			Armour armour1{ "Shield", 30, 40, 60, 50, ArmourType::Iron };
+
+			std::string actualName = armour1.getItemName();
+
+			Assert::AreEqual(expectedName, actualName);
+		}
+
+		TEST_METHOD(TestWeaponConstructor)
+		{
+			std::string expectedName = "Sword";
+			Weapon sword1{ "Sword", 56, 30.0f, 60, 70 };
+
+			std::string actualName = sword1.getItemName();
+
+			Assert::AreEqual(expectedName, actualName);
 		}
 	};
 }

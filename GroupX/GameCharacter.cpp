@@ -351,12 +351,12 @@ bool GameCharacter::PickUpArmour(Armour &Armour) {
 
 	for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) {
 
-		wepweight = weapons_[i].getWeight();
+		wepweight = wepweight + weapons_[i].getWeight();
 	}
 
 	for (std::vector<int>::size_type i = 0; i != armour_.size(); i++) {
 
-		armourweight = armour_[i].getWeight();
+		armourweight = armourweight + armour_[i].getWeight();
 	}
 
 	totalweight = wepweight + armourweight;
@@ -425,30 +425,22 @@ void GameCharacter::AddFood(int amount) {
 
 void GameCharacter::Eat() {
 
-	float foodate = food_ * 0.8;
-	float addhealth = (food_ - foodate) * 0.25;
+	float foodate = food_ * 0.2;
+	food_ = (food_ - foodate);
+	float addhealth = foodate * 0.25;
 
-	//if (health_ == 100.f)
-	//{
-	//	return;
-	//}
-	//else
-	//{
-	//	health_ = health_ + addhealth;
-	//	if (health_ > 100.f) {
-	//		health_ == 100;
-	//	}
-	//}
-
-	if (health_ < 100.f) {
+	if (health_ >= 100.f)
+	{
+		return;
+	}
+	else
+	{
 		health_ = health_ + addhealth;
-		if (health_ >= 100) {
+		if (health_ >= 100.f) {
 			health_ = 100;
 		}
+		else {
+			return;
+		}
 	}
-	else {
-
-	}
-	
-
 }

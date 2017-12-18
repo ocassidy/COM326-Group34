@@ -4,7 +4,7 @@
 * Version information v1.0
 * Authors: Ciaran Moore
 * Date: 07/12/2017
-* Description: header file for BlackWitch class
+* Description: .cpp file for BlackWitch class
 * Copyright notice
 */
 
@@ -14,7 +14,7 @@
 Item::Item () {
 }
 
-Item::Item(std::string itemName, int itemValue, float weight) {
+Item::Item(std::string itemName, int itemValue, float weight) : itemName_{ itemName }, itemValue_{ itemValue }, weight_{ weight } {
 }
 
 //setters 
