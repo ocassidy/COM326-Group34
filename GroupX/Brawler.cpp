@@ -46,7 +46,7 @@ bool Brawler::Attack(GameCharacter &character) {
 	}
 	if (GetEquippedWeapon() == -1) {
 		Brawl(character);
-		return true;
+		return false;
 	}
 
 	if (Weapon().getWeaponHitStrength() < Armour().getDefence()) {
@@ -422,7 +422,6 @@ bool Brawler::Brawl(GameCharacter &character) {
 			return true;
 		}
 	}
-
 }
 
 

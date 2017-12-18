@@ -1,15 +1,14 @@
 /*
-* BlackWitch.h
+* Item.cpp
 *
 * Version information v1.0
 * Authors: Ciaran Moore
 * Date: 07/12/2017
-* Description: .cpp file for BlackWitch class
+* Description: .cpp file for Item class
 * Copyright notice
 */
 
 #include "Item.h"
-#include <string>
 
 Item::Item () {
 }
@@ -18,7 +17,6 @@ Item::Item(std::string itemName, int itemValue, float weight) : itemName_{ itemN
 }
 
 //setters 
-
 void Item::setItemName(std::string itemName) {
 	itemName_ = itemName;
 }

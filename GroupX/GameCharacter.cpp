@@ -2,7 +2,7 @@
 * GameCharacter.cpp
 *
 * Version information v0.1
-* Authors: <Diarmuid Bryson - B00709477 & Ciaran Moore - B00688223
+* Authors: <Diarmuid Bryson - B00709477, Ciaran Moore - B00688223, Oisin Cassidy B00714881
 * Date: 07/12/2017
 * Description: Implementation for GameCharacter class
 * Copyright notice
@@ -324,22 +324,23 @@ bool GameCharacter::PickUpWeapon(Weapon &weapon) {
 
 	for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) {
 
-		wepweight = weapons_[i].getWeight();
+		wepweight = wepweight + weapons_[i].getWeight();
 	}
 
 	for (std::vector<int>::size_type i = 0; i != armour_.size(); i++) {
 
-		armourweight = armour_[i].getWeight();
+		armourweight = armourweight + armour_[i].getWeight();
 	}
 
 	totalweight = wepweight + armourweight;
 
-	if (totalweight <= GetWeightLimit()) {
-		weapons_.push_back(weapon);
-		return true;
+	if (totalweight >= GetWeightLimit()) {
+		DropItem(weapon);
+		return false;
 	}
 	else {
-		return false;
+		weapons_.push_back(weapon);
+		return true;
 	}
 }
 
@@ -361,12 +362,13 @@ bool GameCharacter::PickUpArmour(Armour &Armour) {
 
 	totalweight = wepweight + armourweight;
 
-	if (totalweight <= GetWeightLimit()) {
-		armour_.push_back(Armour);
-		return true;
+	if (totalweight >= GetWeightLimit()) {
+		DropItem(Armour);
+		return false;
 	}
 	else {
-		return false;
+		armour_.push_back(Armour);
+		return true;	
 	}
 }
 
@@ -383,9 +385,7 @@ void GameCharacter::DropItem(Armour &Armour) {
 			}
 		}
 	}
-
 	//	value weight name
-
 }
 
 //method which drops the current weapon item

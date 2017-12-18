@@ -170,17 +170,50 @@ namespace Conflict_UnitTests
 		}
 		TEST_METHOD(BrawlerAttack2)
 		{
-			//Arrange the data			
+			//Arrange the data		
+			float baseHealth;
+			float newHealth;
 			Cleric cleric{ "Zen", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 16 };
 			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 20, 16 };
 			Weapon spear{ "Spear", 15, 25.f, 200, 6 };
 
+			//Act
 			brawler.PickUpWeapon(spear);
+			baseHealth = cleric.GetHealth();
+			brawler.Attack(cleric);
+			cleric.Defend(0);
+			newHealth = cleric.GetHealth();
 
-			float baseHealth = cleric.GetHealth();
+			//Assert
+			Assert::AreNotEqual(baseHealth, newHealth);
+		}
+		TEST_METHOD(BrawlerBrawl)
+		{
+			//Arrange the data		
+			float baseHealth;
 			float newHealth;
+			Cleric cleric{ "Zen", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 16 };
+			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 50, 16 };
 
 			//Act
+			baseHealth = cleric.GetHealth();
+			brawler.Brawl(cleric);
+			cleric.Defend(0);
+			newHealth = cleric.GetHealth();
+
+			//Assert
+			Assert::AreNotEqual(baseHealth, newHealth);
+		}
+		TEST_METHOD(BrawlerBrawlPassFromAttack)
+		{
+			//Arrange the data		
+			float baseHealth;
+			float newHealth;
+			Cleric cleric{ "Zen", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 16 };
+			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 50, 16 };
+
+			//Act
+			baseHealth = cleric.GetHealth();
 			brawler.Attack(cleric);
 			cleric.Defend(0);
 			newHealth = cleric.GetHealth();
@@ -194,7 +227,7 @@ namespace Conflict_UnitTests
 			int expectedState{ 2 };
 			int actualState;
 			Cleric cleric{ "Micky", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 16 };
-			BlackWitch blackwitch{ "Jim", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 20, 100 };
+			BlackWitch blackwitch{ "Mark", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 20, 100 };
 
 			//Act
 			blackwitch.Bewitch(cleric);
@@ -283,18 +316,21 @@ namespace Inventory_UnitTests {
 		{
 			//Test that adding items above weight limit fails
 			//Arrange the data
-			bool addArmourResult;
+			int initialWeight, newWeight;
 			//No point initialising vectors as character should start off with no items.
-			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
-			Armour shield{ "Shield", 40, 40, 50, 100, ArmourType::Leather };
-			Armour hat{ "Tinfoil Hat", 2, 0.5, 1, 100, ArmourType::Cardboard };
+			Brawler brawler{ "Jim", 100.f, 100.f, -1, -1,{},{},20, Idle, 20, 16 };
+			Armour shield{ "Shield", 40, 80, 100, 100, ArmourType::Leather };
+			Armour hat{ "Tinfoil Hat", 2, 21, 21, 100, ArmourType::Cardboard };
 
 			//Act
-			addArmourResult = brawler.PickUpArmour(shield);
-			addArmourResult = brawler.PickUpArmour(hat);
+			initialWeight = brawler.GetWeightLimit();
+			brawler.PickUpArmour(shield);
+			brawler.PickUpArmour(hat);
+
+			newWeight = shield.getWeight() + hat.getWeight();
 
 			//Assert - add weapon should be false as the weight exceeds
-			Assert::IsFalse(addArmourResult);
+			Assert::IsTrue(brawler.GetWeightLimit() <= 100);
 		}
 
 		TEST_METHOD(TestAddWeapons)
