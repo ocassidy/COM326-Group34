@@ -104,4 +104,5 @@ public:
 	//eats food + adds health
 	virtual void Eat();
 
+	float CalculateTotalInventoryWeight(std::vector<Weapon> weapons_, std::vector<Armour> armour_);
 };

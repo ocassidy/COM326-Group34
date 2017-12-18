@@ -59,6 +59,29 @@ namespace UT
 			Assert::AreEqual(expectedName, characterName);
 		}
 
+		TEST_METHOD(TestSleepIncreaseHealth) {
+			float expectedHealth{ 57.5f }, actualHealth;
+
+			Orc orc{ "Noah", 50.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
+
+			orc.Sleep();
+			actualHealth = orc.GetHealth();
+
+			Assert::AreEqual(actualHealth, expectedHealth);
+		}
+
+		TEST_METHOD(TestSleepChangesState)
+		{
+			int expectedIndex{ 2 }, actualIndex;
+
+			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
+
+			brawler.SetState(Sleeping);
+			actualIndex = brawler.GetState();
+
+			Assert::AreEqual(expectedIndex, actualIndex);
+		}
+
 		TEST_METHOD(TestEatConsumesFood)
 		{
 			//Tests that food gets consumed by eat function

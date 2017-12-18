@@ -427,8 +427,11 @@ bool Brawler::Brawl(GameCharacter &character) {
 
 void Brawler::Sleep() {
 	//brawler 20% health increase
-	float bhealth = Brawler().GetHealth() * 1.2;
-	if (bhealth > 100.f) {
-		bhealth == 100.f;
+	float bhealth = this->GetHealth() * 1.2;
+	if (bhealth >= 100.f) {
+		bhealth = 100.f;
+	}
+	else {
+		this->SetHealth(bhealth);
 	}
 }

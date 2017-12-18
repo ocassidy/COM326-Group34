@@ -325,14 +325,14 @@ bool GameCharacter::PickUpWeapon(Weapon &weapon) {
 	for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) {
 
 		wepweight = wepweight + weapons_[i].getWeight();
+		totalweight = totalweight + wepweight;
 	}
 
 	for (std::vector<int>::size_type i = 0; i != armour_.size(); i++) {
 
 		armourweight = armourweight + armour_[i].getWeight();
+		totalweight = totalweight + armourweight;
 	}
-
-	totalweight = wepweight + armourweight;
 
 	if (totalweight >= GetWeightLimit()) {
 		DropItem(weapon);
@@ -408,7 +408,7 @@ void GameCharacter::DropItem(Weapon &weapon) {
 bool GameCharacter::EquipWeapon(int weapon) { //like defend / need to review with unit tests
 	for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) {
 
-		if (weapon < weapons_.size() && weapon >= 0) {
+		if (weapon < weapons_.size() && weapon >= -1) {
 			equippedWeapon_ = weapon;
 			return true;
 		}

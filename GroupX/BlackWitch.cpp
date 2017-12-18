@@ -385,8 +385,12 @@ void BlackWitch::Bewitch(GameCharacter &character) {
 }
 
 void BlackWitch::Sleep() {
-	double bwhealth = BlackWitch().GetHealth() * 1.15;
-	if (bwhealth > 100.f) {
-		bwhealth == 100.f;
+	//increase health by 15%
+	double bwhealth = this->GetHealth() * 1.15;
+	if (bwhealth >= 100.f) {
+		bwhealth = 100.f;
+	}
+	else {
+		this->SetHealth(bwhealth);
 	}
 }
