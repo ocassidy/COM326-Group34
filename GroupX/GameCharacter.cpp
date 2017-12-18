@@ -101,8 +101,9 @@ bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
 
 	SetState(Idle); //setting character state to idle
 
-	int y; //Weapon health deterioration 
 	int x; //attack chance
+	int y; //Weapon health deterioration 
+	
 	float newHealth = 0;
 
 	std::random_device rd; //generator 1
@@ -228,7 +229,7 @@ bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
 				weapons_.erase(weapons_.begin() + i);
 			}
 		}
-		return true;
+		return false;
 	}
 
 	if (character.equippedArmour_ == -1) {
@@ -273,7 +274,7 @@ bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
 				weapons_.erase(weapons_.begin() + i);
 			}
 		}
-		return true;
+		return false;
 	}
 }
 
@@ -285,11 +286,9 @@ void GameCharacter::Defend(int armour) { //need to review this
 
 		if (armour < armour_.size() && armour >= 0) {
 			equippedArmour_ = armour;
-			return;
 		}
 		else {
 			equippedArmour_ = -1;
-			return;
 		}
 	}
 }

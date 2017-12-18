@@ -26,8 +26,8 @@ private:
 	std::string characterName_;
 	float health_;
 	float weightLimit_;
-	int equippedWeapon_ = -1;
-	int equippedArmour_ = -1;
+	int equippedWeapon_;
+	int equippedArmour_;
 	std::vector<Weapon> weapons_;
 	std::vector<Armour> armour_;
 	int food_;

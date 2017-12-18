@@ -5,6 +5,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UT
 {		
+
 	TEST_CLASS(CharacterManagement)
 	{
 	public:
@@ -144,7 +145,6 @@ namespace Conflict_UnitTests
 		}
 		TEST_METHOD(BrawlerAttack1)
 		{
-			//Test that the character enters defending state
 			//Arrange the data
 			int expectedState{ 4 }, actualState;
 			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
@@ -158,11 +158,10 @@ namespace Conflict_UnitTests
 		}
 		TEST_METHOD(BrawlerAttack2)
 		{
-			//Test that the character enters defending state
 			//Arrange the data			
-			Cleric cleric{ "Micky", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 16 };
+			Cleric cleric{ "Zen", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 16 };
 			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 20, 16 };
-			Weapon spear{ "Spear", 15, 25.f, 100, 6 };
+			Weapon spear{ "Spear", 15, 25.f, 200, 6 };
 
 			brawler.PickUpWeapon(spear);
 
@@ -176,6 +175,54 @@ namespace Conflict_UnitTests
 
 			//Assert
 			Assert::AreNotEqual(baseHealth, newHealth);
+		}
+		TEST_METHOD(BlackWitchBewitch)
+		{
+			//Arrange the data		
+			int expectedState{ 2 };
+			int actualState;
+			Cleric cleric{ "Micky", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 16 };
+			BlackWitch blackwitch{ "Jim", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 20, 100 };
+
+			//Act
+			blackwitch.Bewitch(cleric);
+			actualState = cleric.GetState();
+
+			//Assert
+			Assert::AreEqual(expectedState, actualState);
+		}
+		TEST_METHOD(OrcScream)
+		{
+			//If tests fails Scream function failed to apply, if passed then function successful
+			//Arrange the data		
+			int expectedState{ 1 };
+			int actualState;
+			Cleric cleric{ "John", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 16 };
+			Orc orc{ "Jim", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 14, 16 };
+
+			//Act
+			orc.Scream(cleric);
+			actualState = cleric.GetState();
+
+			//Assert
+			Assert::AreEqual(expectedState, actualState);
+			
+		}
+
+		TEST_METHOD(ClericPrayFor)
+		{
+			//Arrange the data		
+			Cleric cleric{ "Sean", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 12 };
+			BlackWitch blackwitch{ "Oran", 50.f, 120.f, -1, -1,{},{}, 20, Idle, 20, 100 };
+
+			int intialHealth = blackwitch.GetHealth();
+
+			//Act
+			cleric.PrayFor(blackwitch);
+			int newHealth = blackwitch.GetHealth();
+
+			//Assert
+			Assert::AreNotEqual(intialHealth, newHealth);
 		}
 	};
 }

@@ -228,6 +228,21 @@ bool Cleric::Attack(GameCharacter &character) {
 }
 
 void Cleric::PrayFor(GameCharacter &character) {
+	
+	std::random_device rd; //generator 1
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<float> dis(50, 100);
+
+	//Chance to set to running
+	double hit = 50 + (5 * GetPietyLevel());
+	int chance = dis(gen);
+
+	if (hit >= chance) {
+		character.SetHealth((5 * GetPietyLevel()));
+	}
+	else {
+		std::cout << "Failed to apply Scream" << std::endl;
+	}
 }
 
 void Cleric::Sleep() {

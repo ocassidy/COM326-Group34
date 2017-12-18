@@ -309,7 +309,21 @@ bool Orc::Attack(GameCharacter &character) {
 }
 
 void Orc::Scream(GameCharacter &character) {
+	
+	std::random_device rd; //generator 1
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<float> dis(1, 100);
 
+	//Chance to set to running
+	double hit = 20 + (5 * GetFeroiousness());
+	int chance = dis(gen); 
+
+	if (hit >= chance) {
+		character.SetState(Running);
+	}
+	else {
+		std::cout << "Failed to apply Scream" << std::endl;
+	}
 }
 
 void Orc::Sleep() {

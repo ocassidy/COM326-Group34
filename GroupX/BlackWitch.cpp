@@ -3,7 +3,7 @@
 BlackWitch::BlackWitch() {
 }
 
-BlackWitch::BlackWitch(std::string characterName, float health, float weightLimit, int equippedWeapon, int equippedArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, int magicProficiency, int darkPower) 
+BlackWitch::BlackWitch(std::string characterName, float health, float weightLimit, int equippedWeapon, int equippedArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, int magicProficiency, int darkPower)
 	: GameCharacter(characterName, health, weightLimit, equippedWeapon, equippedArmour, weapons, armour, food, state), magicProficiency_{ magicProficiency }, darkPower_{ darkPower } {
 }
 
@@ -28,7 +28,7 @@ bool BlackWitch::Attack(GameCharacter &character) {
 
 	int y; //Weapon health deterioration 
 	int x; //attack chance
-	float newHealth = 0;
+	double newHealth = 0;
 
 	std::random_device rd; //generator 1
 	std::mt19937 gen(rd());
@@ -44,6 +44,167 @@ bool BlackWitch::Attack(GameCharacter &character) {
 	if (GetEquippedWeapon() == -1 || GetHealth() <= 20 || GetState() == Dead) {
 		return false;
 	}
+	if (GetDarkPower() == 100) {
+		if (Weapon().getWeaponHitStrength() < Armour().getDefence()) {
+			if (x > 0 && x <= 20) { //successful attack
+
+				switch (GetState()) { //determining damage output
+				case Defending:
+					newHealth = character.GetHealth() * 1.08;
+					character.SetHealth(newHealth);
+					break;
+				case Sleeping:
+					character.SetHealth(0);
+					break;
+				case Dead:
+					//no effect
+					break;
+				case Walking:
+					newHealth = character.GetHealth() * 0.96;
+					character.SetHealth(newHealth);
+					break;
+				case Running:
+					newHealth = character.GetHealth() * 0.96;
+					character.SetHealth(newHealth);
+					break;
+				case Idle:
+					newHealth = character.GetHealth() * 0.96;
+					character.SetHealth(newHealth);
+					break;
+				}
+				float newArmourHealth = character.GetArmour().at(character.GetEquippedArmour()).getArmourHealth() * 0.9;
+				character.GetArmour().at(character.GetEquippedArmour()).setArmourHealth(newArmourHealth);
+
+				for (std::vector<int>::size_type i = 0; i != GetWeapons().size(); i++) //removal of Armor if its health is less than or equal to 0
+				{
+					if (Armour().getArmourHealth() <= 0) {
+						GetArmour().erase(GetArmour().begin() + i);
+					}
+				}
+			}
+			return true;
+		}
+
+		if (x > 20 && x <= 100) { //unsuccessful attack + no damage
+			double WepHealth = Weapon().getWeaponHealth();
+			double removal = WepHealth / 100 * y;
+			double newHealth = WepHealth - removal;
+			double newHP = newHealth; //rounding the double value down to int so it can be passed through without error
+			Weapon().setWeaponHealth(newHP);
+
+
+			for (std::vector<int>::size_type i = 0; i != GetWeapons().size(); i++) //removal of weapon if its health is less than or equal to 0
+			{
+				if (Weapon().getWeaponHealth() <= 0) {
+					GetWeapons().erase(GetWeapons().begin() + i);
+				}
+			}
+			return true;
+		}
+
+		if (Weapon().getWeaponHitStrength() >= Armour().getDefence())
+		{
+			if (x > 0 && x <= 60) { //successful attack
+
+				switch (GetState()) { //determining damage output
+				case Defending:
+					newHealth = character.GetHealth() * 1.08;
+					character.SetHealth(newHealth);
+					break;
+				case Sleeping:
+					character.SetHealth(0);
+					break;
+				case Dead:
+					//no effect
+				case Walking:
+					newHealth = character.GetHealth() * 0.96;
+					character.SetHealth(newHealth);
+					break;
+				case Running:
+					newHealth = character.GetHealth() * 0.96;
+					character.SetHealth(newHealth);
+					break;
+				case Idle:
+					newHealth = character.GetHealth() * 0.96;
+					character.SetHealth(newHealth);
+					break;
+				}
+				float newArmourHealth = character.GetArmour().at(character.GetEquippedArmour()).getArmourHealth() * 0.9;
+				character.GetArmour().at(character.GetEquippedArmour()).setArmourHealth(newArmourHealth);
+
+				for (std::vector<int>::size_type i = 0; i != character.GetWeapons().size(); i++) //removal of weapon if its health is less than or equal to 0
+				{
+					if (Weapon().getWeaponHealth() <= 0) {
+						character.GetWeapons().erase(character.GetWeapons().begin() + i);
+					}
+				}
+				return true;
+			}
+		}
+
+		if (x > 60 && x <= 100) { //unsuccessful attack + no damage
+			double WepHealth = Weapon().getWeaponHealth();
+			double removal = WepHealth / 100 * y;
+			double newHealth = WepHealth - removal;
+			double newHP = newHealth; //rounding the double value down to int so it can be passed through without error
+			Weapon().setWeaponHealth(newHP);
+
+			for (std::vector<int>::size_type i = 0; i != GetWeapons().size(); i++) //removal of weapon if its health is less than or equal to 0
+			{
+				if (Weapon().getWeaponHealth() <= 0) {
+					GetWeapons().erase(GetWeapons().begin() + i);
+				}
+			}
+			return true;
+		}
+
+		if (character.GetEquippedArmour() == -1) {
+
+			if (x > 0 && x <= 80) { //successful attack
+				switch (GetState()) { //determining damage output
+				case Defending:
+					newHealth = character.GetHealth() * 1.08;
+					character.SetHealth(newHealth);
+					break;
+				case Sleeping:
+					character.SetHealth(0);
+					break;
+				case Dead:
+					//no effect
+				case Walking:
+					newHealth = character.GetHealth() * 0.96;
+					character.SetHealth(newHealth);
+					break;
+				case Running:
+					newHealth = character.GetHealth() * 0.96;
+					character.SetHealth(newHealth);
+					break;
+				case Idle:
+					newHealth = character.GetHealth() * 0.96;
+					character.SetHealth(newHealth);
+					break;
+				}
+			}
+			return true;
+		}
+
+		if (x > 80 && x <= 100) { //unsuccessful attack + no damage
+			double WepHealth = Weapon().getWeaponHealth();
+			double removal = WepHealth / 100 * y;
+			double newHealth = WepHealth - removal;
+			double newHP = newHealth; //rounding the double value down to int so it can be passed through without error
+			Weapon().setWeaponHealth(newHP);
+
+			for (std::vector<int>::size_type i = 0; i != GetWeapons().size(); i++) //removal of weapon if its health is less than or equal to 0
+			{
+				if (Weapon().getWeaponHealth() <= 0) {
+					GetWeapons().erase(GetWeapons().begin() + i);
+				}
+			}
+			return true;
+		}
+	}
+	//End of darkPower check attack
 
 	if (Weapon().getWeaponHitStrength() < Armour().getDefence()) {
 		if (x > 0 && x <= 20) { //successful attack
@@ -89,7 +250,7 @@ bool BlackWitch::Attack(GameCharacter &character) {
 		double WepHealth = Weapon().getWeaponHealth();
 		double removal = WepHealth / 100 * y;
 		double newHealth = WepHealth - removal;
-		float newHP = newHealth; //rounding the double value down to int so it can be passed through without error
+		double newHP = newHealth; //rounding the double value down to int so it can be passed through without error
 		Weapon().setWeaponHealth(newHP);
 
 
@@ -146,7 +307,7 @@ bool BlackWitch::Attack(GameCharacter &character) {
 		double WepHealth = Weapon().getWeaponHealth();
 		double removal = WepHealth / 100 * y;
 		double newHealth = WepHealth - removal;
-		float newHP = newHealth; //rounding the double value down to int so it can be passed through without error
+		double newHP = newHealth; //rounding the double value down to int so it can be passed through without error
 		Weapon().setWeaponHealth(newHP);
 
 		for (std::vector<int>::size_type i = 0; i != GetWeapons().size(); i++) //removal of weapon if its health is less than or equal to 0
@@ -192,7 +353,7 @@ bool BlackWitch::Attack(GameCharacter &character) {
 		double WepHealth = Weapon().getWeaponHealth();
 		double removal = WepHealth / 100 * y;
 		double newHealth = WepHealth - removal;
-		float newHP = newHealth; //rounding the double value down to int so it can be passed through without error
+		double newHP = newHealth; //rounding the double value down to int so it can be passed through without error
 		Weapon().setWeaponHealth(newHP);
 
 		for (std::vector<int>::size_type i = 0; i != GetWeapons().size(); i++) //removal of weapon if its health is less than or equal to 0
@@ -206,11 +367,25 @@ bool BlackWitch::Attack(GameCharacter &character) {
 }
 
 void BlackWitch::Bewitch(GameCharacter &character) {
-	
+
+	std::random_device rd; //generator 1
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<float> dis(1, 100);
+
+	//Chance to set to sleeping
+	double hit = 10 + (5 * GetMagicProficiency());
+	int chance = dis(gen); 
+
+	if (hit >= chance) {
+		character.SetState(Sleeping);
+	}
+	else {
+		std::cout << "Failed to apply Bewitch" << std::endl;
+	}
 }
 
 void BlackWitch::Sleep() {
-	float bwhealth = BlackWitch().GetHealth() * 1.15;
+	double bwhealth = BlackWitch().GetHealth() * 1.15;
 	if (bwhealth > 100.f) {
 		bwhealth == 100.f;
 	}
