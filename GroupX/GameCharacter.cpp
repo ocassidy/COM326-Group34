@@ -316,59 +316,90 @@ Armour GameCharacter::GetArmour(int index) {
 	return armour_.at(index);
 }
 
+float GameCharacter::CalculateTotalWeight(std::vector<Armour> armour, std::vector<Weapon>weapons){
+	float sumWeight = 0;
+
+	for (int i = 0; i < armour_.size(); i++) {
+		sumWeight = sumWeight + armour_[i].getWeight();
+	}
+
+	for (int i = 0; i < armour_.size(); i++) {
+		sumWeight = sumWeight + weapons_[i].getWeight();
+	}
+
+	return sumWeight;
+}
+
 bool GameCharacter::PickUpWeapon(Weapon &weapon) {
 
-	float totalweight{ 0.0f };
+	if ((weapon.getWeight() + CalculateTotalWeight(armour_, weapons_)) <= this->weightLimit_) {
+		weapons_.push_back(weapon);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+	
+
+	/*float totalweight{ 0.0f };
 	float wepweight{ 0.0f };
 	float armourweight{ 0.0f };
 
 	for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) {
 
-		wepweight = wepweight + weapons_[i].getWeight();
+		wepweight += weapons_[i].getWeight();
 	}
 
 	for (std::vector<int>::size_type i = 0; i != armour_.size(); i++) {
 
-		armourweight = armourweight + armour_[i].getWeight();
+		armourweight += armour_[i].getWeight();
 	}
 
 	totalweight = armourweight + wepweight;
 
-	if (totalweight >= GetWeightLimit()) {
+	if (totalweight >= this->GetWeightLimit()) {
 		return false;
 	}
 	else {
 		weapons_.push_back(weapon);
 		return true;
 	}
-}
+}*/
 
 bool GameCharacter::PickUpArmour(Armour &Armour) {
 
-	float totalweight{ 0.0f };
+	if (Armour.getWeight() + CalculateTotalWeight(armour_, weapons_) <= this->weightLimit_) {
+		armour_.push_back(Armour);
+		return true;
+	}
+	else {
+		return false;
+	}
+
+	/*float totalweight{ 0.0f };
 	float wepweight{ 0.0f };
 	float armourweight{ 0.0f };
 
 	for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) {
 
-		wepweight = wepweight + weapons_[i].getWeight();
+		wepweight += weapons_[i].getWeight();
 	}
 
 	for (std::vector<int>::size_type i = 0; i != armour_.size(); i++) {
 
-		armourweight = armourweight + armour_[i].getWeight();
+		armourweight += armour_[i].getWeight();
 	}
 
 	totalweight = wepweight + armourweight;
 
-	if (totalweight >= GetWeightLimit()) {
-		//DropItem(Armour);
+	if (totalweight >= this->GetWeightLimit()) {
 		return false;
 	}
 	else {
 		armour_.push_back(Armour);
 		return true;	
-	}
+	}*/
 }
 
 //method which drops the current armour item
