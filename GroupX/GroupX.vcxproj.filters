@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ScrappedCode">
+      <UniqueIdentifier>{eaf13f19-6243-4a42-8d1f-87c3faac4331}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCharacter.cpp">
@@ -38,6 +41,18 @@
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Brawler Attack.cpp">
+      <Filter>ScrappedCode</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackWitch Attack.cpp">
+      <Filter>ScrappedCode</Filter>
+    </ClCompile>
+    <ClCompile Include="Cleric Attack.cpp">
+      <Filter>ScrappedCode</Filter>
+    </ClCompile>
+    <ClCompile Include="Orc Attack.cpp">
+      <Filter>ScrappedCode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,29 +1,4 @@
-#include "Brawler.h"
-
-Brawler::Brawler() {
-}
-
-Brawler::Brawler(std::string characterName, float health, float weightLimit, int equippedWeapon, int equippedArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, int punchDamage, int strength)
-	: GameCharacter(characterName, health, weightLimit, equippedWeapon, equippedArmour, weapons, armour, food, state), punchDamage_{ punchDamage }, strength_{ strength } {
-}
-
-void Brawler::SetPunchDamage(int punchDamage) {
-	punchDamage_ = punchDamage;
-}
-
-int Brawler::GetPunchDamage() const {
-	return punchDamage_;
-}
-
-void Brawler::SetStrength(int strength) {
-	strength_ = strength;
-}
-
-int Brawler::GetStrength() const {
-	return strength_;
-}
-
-bool Brawler::Attack(GameCharacter &character) {
+bool Orc::Attack(GameCharacter &character) {
 	this->SetState(Idle); //setting character state to idle
 
 	double y; //Weapon health deterioration 
@@ -41,18 +16,14 @@ bool Brawler::Attack(GameCharacter &character) {
 	x = dis(gen);
 	y = dis2(gen2);
 
-	if (this->GetHealth() <= 20 || GetState() == Dead) {
-		return false;
-	}
-	if (GetEquippedWeapon() == -1) {
-		this->Brawl(character);
+	if (this->GetEquippedWeapon() == -1 || this->GetHealth() <= 20 || GetState() == Dead) {
 		return false;
 	}
 
 	if (this->GetWeapons().at(this->GetEquippedWeapon()).getWeaponHitStrength() < character.GetArmour().at(character.GetEquippedArmour()).getDefence()) {
 		if (x > 0 && x <= 20) { //successful attack
 
-			switch (character.GetState()) { //determining damage output
+			switch (this->GetState()) { //determining damage output
 			case Defending:
 				newHealth = character.GetHealth() * 0.9f;
 				character.SetHealth(newHealth);
@@ -81,8 +52,8 @@ bool Brawler::Attack(GameCharacter &character) {
 
 			for (std::vector<int>::size_type i = 0; i != GetWeapons().size(); i++) //removal of Armor if its health is less than or equal to 0
 			{
-				if (character.GetArmour().at(character.GetEquippedArmour()).getArmourHealth() <= 0) {
-					character.GetArmour().erase(GetArmour().begin() + i);
+				if (Armour().getArmourHealth() <= 0) {
+					GetArmour().erase(GetArmour().begin() + i);
 				}
 			}
 		}
@@ -94,12 +65,12 @@ bool Brawler::Attack(GameCharacter &character) {
 		double removal = WepHealth / 100 * y;
 		double newHealth = WepHealth - removal;
 		double newHP = newHealth; //rounding the double value down to int so it can be passed through without error
-		this->GetWeapons().at(this->GetEquippedWeapon()).setWeaponHealth((int)newHP);
+		Weapon().setWeaponHealth((int)newHP);
 
 
 		for (std::vector<int>::size_type i = 0; i != GetWeapons().size(); i++) //removal of weapon if its health is less than or equal to 0
 		{
-			if (this->GetWeapons().at(this->GetEquippedWeapon()).getWeaponHealth() <= 0) {
+			if (Weapon().getWeaponHealth() <= 0) {
 				GetWeapons().erase(GetWeapons().begin() + i);
 			}
 		}
@@ -109,7 +80,7 @@ bool Brawler::Attack(GameCharacter &character) {
 	if (this->GetWeapons().at(this->GetEquippedWeapon()).getWeaponHitStrength() < character.GetArmour().at(character.GetEquippedArmour()).getDefence()) {
 		if (x > 0 && x <= 60) { //successful attack
 
-			switch (character.GetState()) { //determining damage output
+			switch (GetState()) { //determining damage output
 			case Defending:
 				newHealth = character.GetHealth() * 0.9f;
 				character.SetHealth(newHealth);
@@ -150,11 +121,11 @@ bool Brawler::Attack(GameCharacter &character) {
 		double removal = WepHealth / 100 * y;
 		double newHealth = WepHealth - removal;
 		double newHP = newHealth; //rounding the double value down to int so it can be passed through without error
-		this->GetWeapons().at(this->GetEquippedWeapon()).setWeaponHealth((int)newHP);
+		Weapon().setWeaponHealth((int)newHP);
 
 		for (std::vector<int>::size_type i = 0; i != GetWeapons().size(); i++) //removal of weapon if its health is less than or equal to 0
 		{
-			if (this->GetWeapons().at(this->GetEquippedWeapon()).getWeaponHealth() <= 0) {
+			if (Weapon().getWeaponHealth() <= 0) {
 				GetWeapons().erase(GetWeapons().begin() + i);
 			}
 		}
@@ -164,7 +135,7 @@ bool Brawler::Attack(GameCharacter &character) {
 	if (character.GetEquippedArmour() == -1) {
 
 		if (x > 0 && x <= 80) { //successful attack
-			switch (character.GetState()) { //determining damage output
+			switch (GetState()) { //determining damage output
 			case Defending:
 				newHealth = character.GetHealth() * 0.9f;
 				character.SetHealth(newHealth);
@@ -196,12 +167,12 @@ bool Brawler::Attack(GameCharacter &character) {
 		double removal = WepHealth / 100 * y;
 		double newHealth = WepHealth - removal;
 		double newHP = newHealth; //rounding the double value down to int so it can be passed through without error
-		this->GetWeapons().at(this->GetEquippedWeapon()).setWeaponHealth((int)newHP);
+		Weapon().setWeaponHealth((int)newHP);
 
-		for (std::vector<int>::size_type i = 0; i != Brawler::GetWeapons().size(); i++) //removal of weapon if its health is less than or equal to 0
+		for (std::vector<int>::size_type i = 0; i != this->GetWeapons().size(); i++) //removal of weapon if its health is less than or equal to 0
 		{
-			if (this->GetWeapons().at(this->GetEquippedWeapon()).getWeaponHealth() <= 0) {
-				GetWeapons().erase(GetWeapons().begin() + i);
+			if (Weapon().getWeaponHealth() <= 0) {
+				this->GetWeapons().erase(this->GetWeapons().begin() + i);
 			}
 		}
 		return true;
@@ -242,30 +213,15 @@ bool Brawler::Attack(GameCharacter &character) {
 		double removal = WepHealth / 100 * y;
 		double newHealth = WepHealth - removal;
 		double newHP = newHealth; //rounding the double value down to int so it can be passed through without error
-		this->GetWeapons().at(this->GetEquippedWeapon()).setWeaponHealth((int)newHP);
+		Weapon().setWeaponHealth((int)newHP);
 
 		for (std::vector<int>::size_type i = 0; i != this->GetWeapons().size(); i++) //removal of weapon if its health is less than or equal to 0
 		{
-			if (this->GetWeapons().at(this->GetEquippedWeapon()).getWeaponHealth() <= 0) {
-				GetWeapons().erase(GetWeapons().begin() + i);
+			if (Weapon().getWeaponHealth() <= 0) {
+				this->GetWeapons().erase(this->GetWeapons().begin() + i);
 			}
 		}
 		return true;
 	}
 	return false;
-}
-
-bool Brawler::Brawl(GameCharacter &character) {
-
-}
-
-void Brawler::Sleep() {
-	//brawler 20% health increase
-	float bhealth = this->GetHealth() * 1.2f;
-	if (bhealth >= 100.f) {
-		bhealth = 100.f;
-	}
-	else {
-		this->SetHealth(bhealth);
-	}
 }

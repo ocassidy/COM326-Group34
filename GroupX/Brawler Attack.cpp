@@ -1,28 +1,3 @@
-#include "Brawler.h"
-
-Brawler::Brawler() {
-}
-
-Brawler::Brawler(std::string characterName, float health, float weightLimit, int equippedWeapon, int equippedArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, int punchDamage, int strength)
-	: GameCharacter(characterName, health, weightLimit, equippedWeapon, equippedArmour, weapons, armour, food, state), punchDamage_{ punchDamage }, strength_{ strength } {
-}
-
-void Brawler::SetPunchDamage(int punchDamage) {
-	punchDamage_ = punchDamage;
-}
-
-int Brawler::GetPunchDamage() const {
-	return punchDamage_;
-}
-
-void Brawler::SetStrength(int strength) {
-	strength_ = strength;
-}
-
-int Brawler::GetStrength() const {
-	return strength_;
-}
-
 bool Brawler::Attack(GameCharacter &character) {
 	this->SetState(Idle); //setting character state to idle
 
@@ -256,16 +231,171 @@ bool Brawler::Attack(GameCharacter &character) {
 }
 
 bool Brawler::Brawl(GameCharacter &character) {
+	SetState(Idle); //setting character state to idle
 
-}
+	float x; //attack chance
+	float newHealth = 0;
 
-void Brawler::Sleep() {
-	//brawler 20% health increase
-	float bhealth = this->GetHealth() * 1.2f;
-	if (bhealth >= 100.f) {
-		bhealth = 100.f;
+	std::random_device rd; //generator 1
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<float> dis(0, 100);
+
+	x = dis(gen);
+
+	if (GetHealth() <= 20 || GetState() == Dead) {
+		return false;
 	}
-	else {
-		this->SetHealth(bhealth);
+
+	if (GetPunchDamage() < Armour().getDefence()) {
+		if (x > 0 && x <= 20) { //successful attack
+
+			switch (GetState()) { //determining damage output
+			case Defending:
+				newHealth = character.GetHealth() * 0.95f;
+				character.SetHealth(newHealth);
+				break;
+			case Sleeping:
+				character.SetHealth(0.0f);
+				break;
+			case Dead:
+				//no effect
+				break;
+			case Walking:
+				newHealth = character.GetHealth() * 0.9f;
+				character.SetHealth(newHealth);
+				break;
+			case Running:
+				newHealth = character.GetHealth() * 0.9f;
+				character.SetHealth(newHealth);
+				break;
+			case Idle:
+				newHealth = character.GetHealth() * 0.9f;
+				character.SetHealth(newHealth);
+				break;
+			}
+			double newArmourHealth = character.GetArmour().at(character.GetEquippedArmour()).getArmourHealth() * 0.45;
+			character.GetArmour().at(character.GetEquippedArmour()).setArmourHealth((int)newArmourHealth);
+
+			for (std::vector<int>::size_type i = 0; i != GetWeapons().size(); i++) //removal of Armor if its health is less than or equal to 0
+			{
+				if (Armour().getArmourHealth() <= 0) {
+					GetArmour().erase(GetArmour().begin() + i);
+				}
+			}
+		}
+		return true;
 	}
+
+	if (x > 20 && x <= 100) { //unsuccessful attack + no damage
+		float newHP = newHealth; //rounding the double value down to int so it can be passed through without error
+		return true;
+	}
+
+	if (this->GetPunchDamage() < character.GetArmour().at(character.GetEquippedArmour()).getDefence()) {
+		{
+			if (x > 0 && x <= 60) { //successful attack
+
+				switch (GetState()) { //determining damage output
+				case Defending:
+					newHealth = character.GetHealth() * 0.95f;
+					character.SetHealth(newHealth);
+					break;
+				case Sleeping:
+					character.SetHealth(0.0f);
+					break;
+				case Dead:
+					//no effect
+					break;
+				case Walking:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				case Running:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				case Idle:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				}
+				double newArmourHealth = character.GetArmour().at(character.GetEquippedArmour()).getArmourHealth() * 0.45;
+				character.GetArmour().at(character.GetEquippedArmour()).setArmourHealth((int)newArmourHealth);
+				return true;
+			}
+		}
+
+		if (x > 60 && x <= 100) { //unsuccessful attack + no damage
+			float newHP = newHealth; //rounding the double value down to int so it can be passed through without error
+			return true;
+		}
+
+		if (character.GetEquippedArmour() == -1) {
+
+			if (x > 0 && x <= 80) { //successful attack
+				switch (GetState()) { //determining damage output
+				case Defending:
+					newHealth = character.GetHealth() * 0.95f;
+					character.SetHealth(newHealth);
+					break;
+				case Sleeping:
+					character.SetHealth(0.0f);
+					break;
+				case Dead:
+					//no effect
+					break;
+				case Walking:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				case Running:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				case Idle:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				}
+			}
+			return true;
+		}
+
+		if (x > 60 && x <= 100) { //unsuccessful attack + no damage
+			float newHP = newHealth; //rounding the double value down to int so it can be passed through without error
+			return true;
+		}
+
+		if (character.GetEquippedArmour() == -1) {
+
+			if (x > 0 && x <= 80) { //successful attack
+				switch (GetState()) { //determining damage output
+				case Defending:
+					newHealth = character.GetHealth() * 0.95f;
+					character.SetHealth(newHealth);
+					break;
+				case Sleeping:
+					character.SetHealth(0.0f);
+					break;
+				case Dead:
+					//no effect
+					break;
+				case Walking:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				case Running:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				case Idle:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				}
+			}
+			return true;
+		}
+	}
+	return false;
 }

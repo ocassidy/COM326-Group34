@@ -111,7 +111,6 @@ namespace UT
 
 		TEST_METHOD(TestEatIncreasesHealth)
 		{
-
 			//	Consumes 20% of the available food. Each unit (1) of food consumed will add 0.25 units of health to the character.
 			//Tests that health increases correctly by eat function 
 			//Arrange the data
@@ -179,19 +178,6 @@ namespace Conflict_UnitTests
 			Assert::AreEqual(expectedIndex, actualIndex);
 		}
 		TEST_METHOD(BrawlerAttack1)
-		{
-			//Arrange the data
-			int expectedState{ 4 }, actualState;
-			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
-
-			//Act
-			brawler.Defend(1); //invalid index! no armour in vector
-			actualState = brawler.GetState();
-
-			//Assert
-			Assert::AreEqual(expectedState, actualState);
-		}
-		TEST_METHOD(BrawlerAttack2)
 		{
 			//Arrange the data		
 			float baseHealth;

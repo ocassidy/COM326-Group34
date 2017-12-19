@@ -97,192 +97,15 @@ CharacterState GameCharacter::GetState() {
 
 //all above is get / set
 
-bool GameCharacter::Attack(GameCharacter &character) {  //attack logic here
-
-	SetState(Idle); //setting character state to idle
-
-	int chanceOfAttack; //attack chance
-	int weaponDeteriation; //Weapon health deterioration 
-	
-	float newHealth = 0;
-
-	std::random_device rd; //generator 1
-	std::mt19937 gen(rd());
-	std::uniform_real_distribution<float> dis(0, 100);
-
-	std::random_device rd2; //generator 2
-	std::mt19937 gen2(rd2());
-	std::uniform_real_distribution<float> dis2(10, 20);
-
-	chanceOfAttack = dis(gen);
-	weaponDeteriation = dis2(gen2);
-
-	if (equippedWeapon_ == -1 || health_ <= 20 || character.GetState() == Dead) {
-		return false;
-	}
-
-	if (Weapon().getWeaponHitStrength() < Armour().getDefence()) {
-		if (chanceOfAttack > 0 && chanceOfAttack <= 20) { //successful attack
-
-			switch (state_) { //determining damage output
-			case Defending:
-				newHealth = character.GetHealth() * 0.9;
-				character.SetHealth(newHealth);
-				break;
-			case Sleeping:
-				character.SetHealth(0);
-				break;
-			case Dead:
-				//no effect
-				break;
-			case Walking:
-				newHealth = character.GetHealth() * 0.8;
-				character.SetHealth(newHealth);
-				break;
-			case Running:
-				newHealth = character.GetHealth() * 0.8;
-				character.SetHealth(newHealth);
-				break;
-			case Idle:
-				newHealth = character.GetHealth() * 0.8;
-				character.SetHealth(newHealth);
-				break;
-			}
-			float newArmourHealth = character.armour_.at(character.equippedArmour_).getArmourHealth() * 0.9;
-			character.armour_.at(character.equippedArmour_).setArmourHealth(newArmourHealth);
-
-			for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) //removal of Armor if its health is less than or equal to 0
-			{
-				if (Armour().getArmourHealth() <= 0) {
-					armour_.erase(armour_.begin() + i);
-				}
-			}
-		}
-		return true;
-	}
-
-	if (chanceOfAttack > 20 && chanceOfAttack <= 100) { //unsuccessful attack + no damage
-		double WepHealth = Weapon().getWeaponHealth();
-		double removal = WepHealth / 100 * weaponDeteriation;
-		double newHealth = WepHealth - removal;
-		float newHP = newHealth; //rounding the double value down to int so it can be passed through without error
-		Weapon().setWeaponHealth(newHP);
-
-		for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) //removal of weapon if its health is less than or equal to 0
-		{
-			if (Weapon().getWeaponHealth() <= 0) {
-				weapons_.erase(weapons_.begin() + i);
-			}
-		}
-		return true;
-	}
-
-	if (Weapon().getWeaponHitStrength() >= Armour().getDefence()) {
-		if (chanceOfAttack > 0 && chanceOfAttack <= 60) { //successful attack
-
-			switch (state_) { //determining damage output
-			case Defending:
-				newHealth = character.GetHealth() * 0.9;
-				character.SetHealth(newHealth);
-				break;
-			case Sleeping:
-				character.SetHealth(0);
-				break;
-			case Dead:
-				//no effect
-			case Walking:
-				newHealth = character.GetHealth() * 0.8;
-				character.SetHealth(newHealth);
-				break;
-			case Running:
-				newHealth = character.GetHealth() * 0.8;
-				character.SetHealth(newHealth);
-				break;
-			case Idle:
-				newHealth = character.GetHealth() * 0.8;
-				character.SetHealth(newHealth);
-				break;
-			}
-			float newArmourHealth = character.armour_.at(character.equippedArmour_).getArmourHealth() * 0.9;
-			character.armour_.at(character.equippedArmour_).setArmourHealth(newArmourHealth);
-
-			for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) //removal of Armor if its health is less than or equal to 0
-			{
-				if (Armour().getArmourHealth() <= 0) {
-					armour_.erase(armour_.begin() + i);
-				}
-			}
-			return true;
-		}
-	}
-
-	if (chanceOfAttack > 60 && chanceOfAttack <= 100) { //unsuccessful attack + no damage
-		double WepHealth = Weapon().getWeaponHealth();
-		double removal = WepHealth / 100 * weaponDeteriation;
-		double newHealth = WepHealth - removal;
-		float newHP = newHealth; //rounding the double value down to int so it can be passed through without error
-		Weapon().setWeaponHealth(newHP);
-
-		for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) //removal of weapon if its health is less than or equal to 0
-		{
-			if (Weapon().getWeaponHealth() <= 0) {
-				weapons_.erase(weapons_.begin() + i);
-			}
-		}
-		return false;
-	}
-
-	if (character.equippedArmour_ == -1) {
-		if (chanceOfAttack > 0 && chanceOfAttack <= 80) { //successful attack
-			switch (state_) { //determining damage output
-			case Defending:
-				newHealth = character.GetHealth() * 0.9;
-				character.SetHealth(newHealth);
-				break;
-			case Sleeping:
-				character.SetHealth(0);
-				break;
-			case Dead:
-				//no effect
-			case Walking:
-				newHealth = character.GetHealth() * 0.8;
-				character.SetHealth(newHealth);
-				break;
-			case Running:
-				newHealth = character.GetHealth() * 0.8;
-				character.SetHealth(newHealth);
-				break;
-			case Idle:
-				newHealth = character.GetHealth() * 0.8;
-				character.SetHealth(newHealth);
-				break;
-			}
-		}
-		return true;
-	}
-
-	if (chanceOfAttack > 80 && chanceOfAttack <= 100) { //unsuccessful attack + no damage
-		double WepHealth = Weapon().getWeaponHealth();
-		double removal = WepHealth / 100 * weaponDeteriation;
-		double newHealth = WepHealth - removal;
-		float newHP = newHealth; //rounding the double value down to int so it can be passed through without error
-		Weapon().setWeaponHealth(newHP);
-
-		for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) //removal of weapon if its health is less than or equal to 0
-		{
-			if (Weapon().getWeaponHealth() <= 0) {
-				weapons_.erase(weapons_.begin() + i);
-			}
-		}
-		return false;
-	}
+bool GameCharacter::Attack(GameCharacter &character) {
+	return true;
 }
 
 void GameCharacter::Defend(int armour) { //need to review this
 
 	SetState(Defending); //setting character state to defending
 
-	for (std::vector<int>::size_type i = 0; i != armour_.size(); i++){
+	for (std::vector<int>::size_type i = 0; i != armour_.size(); i++) {
 
 		if (armour < armour_.size() && armour >= 0) {
 			equippedArmour_ = armour;
@@ -316,7 +139,7 @@ Armour GameCharacter::GetArmour(int index) {
 	return armour_.at(index);
 }
 
-float GameCharacter::CalculateTotalWeight(std::vector<Armour> armour, std::vector<Weapon>weapons){
+float GameCharacter::CalculateTotalWeight(std::vector<Armour> armour, std::vector<Weapon>weapons) {
 	float sumWeight = 0;
 
 	for (int i = 0; i < armour_.size(); i++) {
@@ -340,31 +163,25 @@ bool GameCharacter::PickUpWeapon(Weapon &weapon) {
 		return false;
 	}
 }
-	
 
-	/*float totalweight{ 0.0f };
-	float wepweight{ 0.0f };
-	float armourweight{ 0.0f };
 
-	for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) {
-
-		wepweight += weapons_[i].getWeight();
-	}
-
-	for (std::vector<int>::size_type i = 0; i != armour_.size(); i++) {
-
-		armourweight += armour_[i].getWeight();
-	}
-
-	totalweight = armourweight + wepweight;
-
-	if (totalweight >= this->GetWeightLimit()) {
-		return false;
-	}
-	else {
-		weapons_.push_back(weapon);
-		return true;
-	}
+/*float totalweight{ 0.0f };
+float wepweight{ 0.0f };
+float armourweight{ 0.0f };
+for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) {
+wepweight += weapons_[i].getWeight();
+}
+for (std::vector<int>::size_type i = 0; i != armour_.size(); i++) {
+armourweight += armour_[i].getWeight();
+}
+totalweight = armourweight + wepweight;
+if (totalweight >= this->GetWeightLimit()) {
+return false;
+}
+else {
+weapons_.push_back(weapon);
+return true;
+}
 }*/
 
 bool GameCharacter::PickUpArmour(Armour &Armour) {
@@ -380,25 +197,19 @@ bool GameCharacter::PickUpArmour(Armour &Armour) {
 	/*float totalweight{ 0.0f };
 	float wepweight{ 0.0f };
 	float armourweight{ 0.0f };
-
 	for (std::vector<int>::size_type i = 0; i != weapons_.size(); i++) {
-
-		wepweight += weapons_[i].getWeight();
+	wepweight += weapons_[i].getWeight();
 	}
-
 	for (std::vector<int>::size_type i = 0; i != armour_.size(); i++) {
-
-		armourweight += armour_[i].getWeight();
+	armourweight += armour_[i].getWeight();
 	}
-
 	totalweight = wepweight + armourweight;
-
 	if (totalweight >= this->GetWeightLimit()) {
-		return false;
+	return false;
 	}
 	else {
-		armour_.push_back(Armour);
-		return true;	
+	armour_.push_back(Armour);
+	return true;
 	}*/
 }
 
@@ -408,7 +219,7 @@ void GameCharacter::DropItem(Armour &Armour) {
 	for (std::vector<int>::size_type i = 0; i != armour_.size(); i++) {
 		if (Armour.getItemName() == armour_[i].getItemName()) {
 			if (Armour.getWeight() == armour_[i].getWeight()) {
-				if (Armour.getItemValue() == armour_[i].getItemValue())	{
+				if (Armour.getItemValue() == armour_[i].getItemValue()) {
 					armour_.erase(armour_.begin() + i);
 					return;
 				}
@@ -447,6 +258,7 @@ bool GameCharacter::EquipWeapon(int weapon) { //like defend / need to review wit
 			return false;
 		}
 	}
+	return false;
 }
 
 void GameCharacter::AddFood(int amount) {
@@ -455,9 +267,10 @@ void GameCharacter::AddFood(int amount) {
 
 void GameCharacter::Eat() {
 
-	float foodate = food_ * 0.2;
-	food_ = (food_ - foodate);
-	float addhealth = foodate * 0.25;
+	float foodate = food_ * 0.2f;
+	float value = food_ - foodate;
+	food_ = ((int)value);
+	float addhealth = foodate * 0.25f;
 
 	if (health_ >= 100.f)
 	{
