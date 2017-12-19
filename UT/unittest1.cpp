@@ -305,7 +305,7 @@ namespace Inventory_UnitTests {
 			//No point initialising vectors as character should start off with no items.
 			Brawler brawler{"Jim", 100.f, 120.f, -1, -1, {}, {}, 20, Idle, 20, 16};
 			Weapon spear{"Spear", 15, 25.f, 100, 6};
-			Armour glove{"Leather glove", 3, 0.25f, 1, 100, ArmourType::Leather};
+			Armour glove{"Leather glove", 3, 25.0f, 1, 100, ArmourType::Leather};
 			Armour chainMail{"Chain Mail", 45, 85.f, 200, 100, ArmourType::Steel};
 
 			//Act
@@ -315,6 +315,7 @@ namespace Inventory_UnitTests {
 
 			//Assert - add weapon should be false as the weight exceeds the limit
 			Assert::IsFalse(addItemResult);
+
 		}
 
 		TEST_METHOD(TestAddWeaponWeight)
@@ -324,8 +325,8 @@ namespace Inventory_UnitTests {
 			bool addWeaponResult;
 			//No point initialising vectors as character should start off with no items.
 			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
-			Weapon spear{"Spear", 15, 25.f, 100, 6 };
-			Weapon bow{"Bow", 25, 25.f, 100, 6 };
+			Weapon spear{"Spear", 15, 120.f, 100, 6 };
+			Weapon bow{"Bow", 25, 1.f, 100, 6 };
 
 			//Act
 			addWeaponResult = brawler.PickUpWeapon(spear);
