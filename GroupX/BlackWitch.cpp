@@ -3,8 +3,8 @@
 BlackWitch::BlackWitch() {
 }
 
-BlackWitch::BlackWitch(std::string characterName, float health, float weightLimit, int equippedWeapon, int equippedArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, int magicProficiency, int darkPower)
-	: GameCharacter(characterName, health, weightLimit, equippedWeapon, equippedArmour, weapons, armour, food, state), magicProficiency_{ magicProficiency }, darkPower_{ darkPower } {
+BlackWitch::BlackWitch(std::string characterName, float health, float weightLimit, int food, CharacterState state, int magicProficiency, int darkPower)
+	: GameCharacter(characterName, health, weightLimit, food, state), magicProficiency_{ magicProficiency }, darkPower_{ darkPower } {
 }
 
 void BlackWitch::SetMagicProficiency(int magicProficiency) {
@@ -24,7 +24,7 @@ int BlackWitch::GetDarkPower() const {
 }
 
 bool BlackWitch::Attack(GameCharacter &character) {
-
+	return true;
 }
 
 void BlackWitch::Bewitch(GameCharacter &character) {

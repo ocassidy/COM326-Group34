@@ -3,8 +3,8 @@
 Cleric::Cleric() {
 }
 
-Cleric::Cleric(std::string characterName, float health, float weightLimit, int equippedWeapon, int equippedaArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, int pietyLevel) : GameCharacter(characterName, health, weightLimit,
-	equippedWeapon, equippedaArmour, weapons, armour, food, state), pietyLevel_{ pietyLevel } {
+Cleric::Cleric(std::string characterName, float health, float weightLimit,  int food, CharacterState state, int pietyLevel) 
+	: GameCharacter(characterName, health, weightLimit, food, state), pietyLevel_{ pietyLevel } {
 }
 
 void Cleric::SetPietyLevel(int pietyLevel) {
@@ -16,7 +16,7 @@ int Cleric::GetPietyLevel() const {
 }
 
 bool Cleric::Attack(GameCharacter &character) {
-
+	return true;
 }
 
 void Cleric::PrayFor(GameCharacter &character) {

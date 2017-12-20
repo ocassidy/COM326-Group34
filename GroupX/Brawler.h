@@ -28,8 +28,7 @@ public:
 	Brawler();
 
 	//Custom Constructor
-	Brawler(std::string characterName, float health, float weightLimit,
-		int equippedWeapon, int equippedArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, int punchDamage, int strength);
+	Brawler(std::string characterName, float health, float weightLimit, int food, CharacterState state, int punchDamage, int strength);
 
 	void SetPunchDamage(int punchDamage);
 	int GetPunchDamage() const;
@@ -42,4 +41,5 @@ public:
 	bool Brawl(GameCharacter &charcter);
 
 	virtual void Sleep();
+
 };

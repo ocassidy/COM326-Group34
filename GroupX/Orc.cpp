@@ -3,8 +3,8 @@
 Orc::Orc() {
 }
 
-Orc::Orc(std::string characterName, float health, float weightLimit, int equippedWeapon, int equippedArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, int ferociousness, int strength) : GameCharacter(characterName, health, weightLimit,
-	equippedWeapon, equippedArmour, weapons, armour, food, state), ferociousness_{ ferociousness }, strength_{ strength } {
+Orc::Orc(std::string characterName, float health, float weightLimit, int food, CharacterState state, int ferociousness, int strength) 
+	: GameCharacter(characterName, health, weightLimit, food, state), ferociousness_{ ferociousness }, strength_{ strength } {
 }
 
 void Orc::SetFeroiousness(int ferociousness) {
@@ -24,7 +24,7 @@ int Orc::GetStrength() const {
 }
 
 bool Orc::Attack(GameCharacter &character) {
-
+	return true;
 }
 
 void Orc::Scream(GameCharacter &character) {

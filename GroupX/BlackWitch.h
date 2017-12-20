@@ -30,7 +30,7 @@ public:
 
 	//Custom Constructor
 	BlackWitch(std::string characterName, float health, float weightLimit,
-		int equippedWeapon, int equippedArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, int magicProficiency, int darkPower);
+		 int food, CharacterState state, int magicProficiency, int darkPower);
 
 	void SetMagicProficiency(int magicProficiency);
 	int GetMagicProficiency() const;

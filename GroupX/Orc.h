@@ -30,7 +30,7 @@ public:
 
 	//Custom Constructor
 	Orc(std::string characterName, float health, float weightLimit,
-		int equippedWeapon, int equippedArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, int ferociousness, int strength);
+		int food, CharacterState state, int ferociousness, int strength);
 
 	void SetFeroiousness(int ferociousness);
 	int GetFeroiousness() const;

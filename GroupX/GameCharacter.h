@@ -26,8 +26,8 @@ private:
 	std::string characterName_;
 	float health_;
 	float weightLimit_;
-	int equippedWeapon_;
-	int equippedArmour_;
+	int equippedWeapon_ = -1;
+	int equippedArmour_ = -1;
 	std::vector<Weapon> weapons_;
 	std::vector<Armour> armour_;
 	int food_;
@@ -38,8 +38,7 @@ public:
 	GameCharacter();
 
 	//Custom Constructor: possible correction on including equipped armor / weapon
-	GameCharacter(std::string characterName, float health, float weightLimit,
-		int equippedweapon, int equippedarmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state);
+	GameCharacter(std::string characterName, float health, float weightLimit, int food, CharacterState state);
 
 	//deconstructor
 	~GameCharacter();
@@ -72,7 +71,7 @@ public:
 
 	//get and set character state
 	void SetState(CharacterState state);
-	CharacterState GetState();
+	CharacterState GetState() const;
 
 	//attack logic
 	virtual bool Attack(GameCharacter &character)=0;
@@ -104,5 +103,8 @@ public:
 	//eats food + adds health
 	virtual void Eat();
 
-	float GameCharacter::CalculateTotalWeight(std::vector<Armour> armour, std::vector<Weapon>weapons);
+	float CalculateTotalWeight(std::vector<Armour> armour, std::vector<Weapon>weapons);
+
+	double WeaponDeteriorationChance();
+	double AttackChance();
 };

@@ -29,7 +29,7 @@ public:
 
 	//Custom Constructor
 	Cleric(std::string characterName, float health, float weightLimit,
-		int equippedWeapon, int equippedArmour, std::vector<Weapon> weapons, std::vector<Armour> armour, int food, CharacterState state, int pietyLevel);
+		 int food, CharacterState state, int pietyLevel);
 
 	void SetPietyLevel(int pietyLevel);
 	int GetPietyLevel() const;

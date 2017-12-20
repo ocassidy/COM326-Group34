@@ -5,16 +5,14 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UT
 {		
-
 	TEST_CLASS(CharacterManagement)
 	{
 	public:
-
 		TEST_METHOD(TestBrawlerConstructor)
 		{
 			//Arrange the data
 			std::string expectedName{ "Jim" };
-			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1, {}, {},20, Idle, 20, 16 };
+			Brawler brawler{ "Jim", 100.f, 120.f, 20, Idle, 20, 16 };
 
 			//Act
 			std::string characterName = brawler.GetCharacterName();
@@ -26,7 +24,7 @@ namespace UT
 		{
 			//Arrange the data
 			std::string expectedName{ "Micky" };
-			Cleric cleric{ "Micky", 100.f, 120.f, -1, -1,{},{},20, Idle, 16 };
+			Cleric cleric{ "Micky", 100.f, 120.f, 20, Idle, 16 };
 
 			//Act
 			std::string characterName = cleric.GetCharacterName();
@@ -38,7 +36,7 @@ namespace UT
 		{
 			//Arrange the data
 			std::string expectedName{ "Marcus" };
-			BlackWitch blackwitch{ "Marcus", 100.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
+			BlackWitch blackwitch{ "Marcus", 100.f, 120.f, 20, Idle, 20, 16 };
 
 			//Act
 			std::string characterName = blackwitch.GetCharacterName();
@@ -50,7 +48,7 @@ namespace UT
 		{
 			//Arrange the data
 			std::string expectedName{ "Noah" };
-			Orc orc{ "Noah", 100.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
+			Orc orc{ "Noah", 100.f, 120.f, 20, Idle, 20, 16 };
 
 			//Act
 			std::string characterName = orc.GetCharacterName();
@@ -62,7 +60,7 @@ namespace UT
 		TEST_METHOD(TestSleepIncreaseHealth) {
 			float expectedHealth{ 57.5f }, actualHealth;
 
-			Orc orc{ "Noah", 50.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
+			Orc orc{ "Noah", 50.f, 120.f, 20, Idle, 20, 16 };
 
 			orc.Sleep();
 			actualHealth = orc.GetHealth();
@@ -74,7 +72,7 @@ namespace UT
 		{
 			int expectedIndex{ 2 }, actualIndex;
 
-			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
+			Brawler brawler{ "Jim", 100.f, 120.f, 20, Idle, 20, 16 };
 
 			brawler.SetState(Sleeping);
 			actualIndex = brawler.GetState();
@@ -87,7 +85,7 @@ namespace UT
 			//Tests that food gets consumed by eat function
 			//Arrange the data
 			int expectedFood{ 16 }, actualFood;
-			Brawler brawler{"Jim", 100.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
+			Brawler brawler{"Jim", 100.f, 120.f, 20, Idle, 20, 16 };
 
 			//Act
 			brawler.Eat();
@@ -100,7 +98,7 @@ namespace UT
 		TEST_METHOD(AddFood)
 		{
 			int expectedFood{ 25 }, actualFood;
-			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
+			Brawler brawler{ "Jim", 100.f, 120.f, 20, Idle, 20, 16 };
 
 			brawler.AddFood(5);
 			actualFood = brawler.GetFood();
@@ -115,7 +113,7 @@ namespace UT
 			//Tests that health increases correctly by eat function 
 			//Arrange the data
 			float expectedHealth{ 51.0f }, actualHealth; //(health should not exceed 100)
-			Brawler brawler{ "Jim", 50.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
+			Brawler brawler{ "Jim", 50.f, 120.f, 20, Idle, 20, 16 };
 
 			//Act
 			brawler.Eat();
@@ -130,7 +128,7 @@ namespace UT
 			//Tests that health does not exceed 100 by eat function 
 			//Arrange the data
 			float expectedHealth{ 100.0f }, actualHealth; //(health should not exceed 100)
-			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
+			Brawler brawler{ "Jim", 100.f, 120.f, 20, Idle, 20, 16 };
 
 			//Act
 			brawler.Eat();
@@ -142,7 +140,6 @@ namespace UT
 	};
 }
 
-
 namespace Conflict_UnitTests
 {
 	TEST_CLASS(Conflict)
@@ -153,7 +150,7 @@ namespace Conflict_UnitTests
 			//Test that the character enters defending state
 			//Arrange the data
 			int expectedState{ 4 }, actualState;
-			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
+			Brawler brawler{ "Jim", 100.f, 120.f, 20, Idle, 20, 16 };
 
 			//Act
 			brawler.Defend(1); //invalid index! no armour in vector
@@ -168,11 +165,57 @@ namespace Conflict_UnitTests
 			//Test that the character selected armour remains -1 
 			//Arrange the data
 			int expectedIndex{ -1 }, actualIndex;
-			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
+			Brawler brawler{ "Jim", 100.f, 120.f, 20, Idle, 20, 16 };
 
 			//Act
 			brawler.Defend(0); //invalid index! no armour in vector
 			actualIndex = brawler.GetEquippedArmour();
+
+			//Assert
+			Assert::AreEqual(expectedIndex, actualIndex);
+		}
+		TEST_METHOD(Defend3)
+		{
+			//Test that the character selected armour is equipped
+			//Arrange the data
+			int expectedIndex{ 0 }, actualIndex;
+			Brawler brawler{ "Jim", 100.f, 120.f, 20, Idle, 20, 16 };
+			Armour glove{ "Leather glove", 3, 25.0f, 1, 100, ArmourType::Leather };
+
+			//Act
+			brawler.PickUpArmour(glove);
+			brawler.Defend(0); //valid index
+			actualIndex = brawler.GetEquippedArmour();
+
+			//Assert
+			Assert::AreEqual(expectedIndex, actualIndex);
+		}
+		TEST_METHOD(EquipWeapon1)
+		{
+			//Test that the character selected armour is equipped
+			//Arrange the data
+			int expectedIndex{ -1 }, actualIndex;
+			Brawler brawler{ "Jim", 100.f, 120.f, 20, Idle, 20, 16 };
+
+			//Act
+			brawler.EquipWeapon(0); //invalid index! no weapon in vector
+			actualIndex = brawler.GetEquippedWeapon();
+
+			//Assert
+			Assert::AreEqual(expectedIndex, actualIndex);
+		}
+		TEST_METHOD(EquipWeapon2)
+		{
+			//Test that the character selected armour is equipped
+			//Arrange the data
+			int expectedIndex{ 0 }, actualIndex;
+			Brawler brawler{ "Jim", 100.f, 120.f, 20, Idle, 20, 16 };
+			Weapon sword{ "Sword", 56, 30.0f, 60, 70 };
+
+			//Act
+			brawler.PickUpWeapon(sword);
+			brawler.EquipWeapon(0); //valid index	
+			actualIndex = brawler.GetEquippedWeapon();
 
 			//Assert
 			Assert::AreEqual(expectedIndex, actualIndex);
@@ -182,12 +225,13 @@ namespace Conflict_UnitTests
 			//Arrange the data		
 			float baseHealth;
 			float newHealth;
-			Cleric cleric{ "Zen", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 16 };
-			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 20, 16 };
+			Cleric cleric{ "Zen", 100.f, 120.f, 20, Idle, 16 };
+			Brawler brawler{ "Jim", 100.f, 120.f, 20, Idle, 20, 16 };
 			Weapon spear{ "Spear", 15, 25.f, 200, 6 };
 
 			//Act
 			brawler.PickUpWeapon(spear);
+			brawler.EquipWeapon(0);
 			baseHealth = cleric.GetHealth();
 			brawler.Attack(cleric);
 			cleric.Defend(0);
@@ -201,8 +245,8 @@ namespace Conflict_UnitTests
 			//Arrange the data		
 			float baseHealth;
 			float newHealth;
-			Cleric cleric{ "Zen", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 16 };
-			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 50, 16 };
+			Cleric cleric{ "Zen", 100.f, 120.f, 20, Idle, 16 };
+			Brawler brawler{ "Jim", 100.f, 120.f, 20, Idle, 50, 16 };
 
 			//Act
 			baseHealth = cleric.GetHealth();
@@ -218,8 +262,8 @@ namespace Conflict_UnitTests
 			//Arrange the data		
 			float baseHealth;
 			float newHealth;
-			Cleric cleric{ "Zen", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 16 };
-			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 50, 16 };
+			Cleric cleric{ "Zen", 100.f, 120.f, 20, Idle, 16 };
+			Brawler brawler{ "Jim", 100.f, 120.f, 20, Idle, 50, 16 };
 
 			//Act
 			baseHealth = cleric.GetHealth();
@@ -235,8 +279,8 @@ namespace Conflict_UnitTests
 			//Arrange the data		
 			int expectedState{ 2 };
 			int actualState;
-			Cleric cleric{ "Micky", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 16 };
-			BlackWitch blackwitch{ "Mark", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 20, 100 };
+			Cleric cleric{ "Micky", 100.f, 120.f, 20, Idle, 16 };
+			BlackWitch blackwitch{ "Mark", 100.f, 120.f, 20, Idle, 20, 100 };
 
 			//Act
 			blackwitch.Bewitch(cleric);
@@ -251,8 +295,8 @@ namespace Conflict_UnitTests
 			//Arrange the data		
 			int expectedState{ 1 };
 			int actualState;
-			Cleric cleric{ "John", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 16 };
-			Orc orc{ "Jim", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 14, 16 };
+			Cleric cleric{ "John", 100.f, 120.f, 20, Idle, 16 };
+			Orc orc{ "Jim", 100.f, 120.f, 20, Idle, 14, 16 };
 
 			//Act
 			orc.Scream(cleric);
@@ -266,8 +310,8 @@ namespace Conflict_UnitTests
 		TEST_METHOD(ClericPrayFor)
 		{
 			//Arrange the data		
-			Cleric cleric{ "Sean", 100.f, 120.f, -1, -1,{},{}, 20, Idle, 12 };
-			BlackWitch blackwitch{ "Oran", 50.f, 120.f, -1, -1,{},{}, 20, Idle, 20, 100 };
+			Cleric cleric{ "Sean", 100.f, 120.f, 20, Idle, 12 };
+			BlackWitch blackwitch{ "Oran", 50.f, 120.f, 20, Idle, 20, 100 };
 
 			int intialHealth = blackwitch.GetHealth();
 
@@ -289,7 +333,7 @@ namespace Inventory_UnitTests {
 			//Arrange the data
 			bool addItemResult;
 			//No point initialising vectors as character should start off with no items.
-			Brawler brawler{"Jim", 100.f, 120.f, -1, -1, {}, {}, 20, Idle, 20, 16};
+			Brawler brawler{"Jim", 100.f, 120.f, 20, Idle, 20, 16};
 			Weapon spear{"Spear", 15, 25.f, 100, 6};
 			Armour glove{"Leather glove", 3, 25.0f, 1, 100, ArmourType::Leather};
 			Armour chainMail{"Chain Mail", 45, 85.f, 200, 100, ArmourType::Steel};
@@ -301,7 +345,6 @@ namespace Inventory_UnitTests {
 
 			//Assert - add weapon should be false as the weight exceeds the limit
 			Assert::IsFalse(addItemResult);
-
 		}
 
 		TEST_METHOD(TestAddWeaponWeight)
@@ -310,9 +353,9 @@ namespace Inventory_UnitTests {
 			//Arrange the data
 			bool addWeaponResult;
 			//No point initialising vectors as character should start off with no items.
-			Brawler brawler{ "Jim", 100.f, 10.f, -1, -1,{},{},20, Idle, 20, 16 };
-			Weapon spear{"Spear", 15, 6.f, 100, 6 };
-			Weapon bow{"Bow", 25, 6.f, 100, 6 };
+			Brawler brawler{ "Jim", 100.f, 100.f, 20, Idle, 20, 16 };
+			Weapon spear{"Spear", 15, 80, 100, 6 };
+			Weapon bow{"Bow", 25, 22, 100, 6 };
 
 			//Act
 			addWeaponResult = brawler.PickUpWeapon(spear);
@@ -326,27 +369,24 @@ namespace Inventory_UnitTests {
 		{
 			//Test that adding items above weight limit fails
 			//Arrange the data
-			int initialWeight, newWeight;
+			bool addArmourResult;
 			//No point initialising vectors as character should start off with no items.
-			Brawler brawler{ "Jim", 100.f, 100.f, -1, -1,{},{},20, Idle, 20, 16 };
+			Brawler brawler{ "Jim", 100.f, 100.f, 20, Idle, 20, 16 };
 			Armour shield{ "Shield", 40, 80, 100, 100, ArmourType::Leather };
 			Armour hat{ "Tinfoil Hat", 2, 21, 21, 100, ArmourType::Cardboard };
 
 			//Act
-			initialWeight = brawler.GetWeightLimit();
-			brawler.PickUpArmour(shield);
-			brawler.PickUpArmour(hat);
-
-			newWeight = shield.getWeight() + hat.getWeight();
+			addArmourResult = brawler.PickUpArmour(shield);
+			addArmourResult = brawler.PickUpArmour(hat);
 
 			//Assert - add weapon should be false as the weight exceeds
-			Assert::IsTrue(newWeight >= brawler.GetWeightLimit());
+			Assert::IsFalse(addArmourResult);
 		}
 
 		TEST_METHOD(TestAddWeapons)
 		{
 			//Arrange the data
-			Brawler brawler{"Jim", 100.f, 120.f, -1, -1,{},{},20, Idle, 20, 16};
+			Brawler brawler{"Jim", 100.f, 120.f, 20, Idle, 20, 16};
 			Weapon spear{"Spear", 15, 25.f, 100, 6 };
 			Weapon bow{"Bow", 25, 22.f, 100, 6};
 			Weapon spear2{"Lance of Longinus", 100, 35.f, 200, 35};
@@ -375,7 +415,7 @@ namespace Inventory_UnitTests {
 			//Test Drop weapon
 			//Arrange the data
 			std::string expectedWeaponName{ "Spear" };
-			Brawler brawler{"Jim", 100.f, 120.f, -1, -1,{},{},20, Idle, 20, 16};
+			Brawler brawler{"Jim", 100.f, 120.f, 20, Idle, 20, 16};
 			Weapon spear1{"Spear", 15, 25.f, 100, 6 };
 			Weapon bow{"Bow", 25, 22.f, 100, 6 };
 			Weapon spear2{"Spear", 34, 54.f, 90, 16 };
@@ -400,7 +440,7 @@ namespace Inventory_UnitTests {
 			//Test Drop weapon
 			//Arrange the data
 			std::string expectedArmourName{ "Cardboard suit of armour" };
-			Brawler brawler{ "Jim", 100.f, 120.f, -1, -1,{},{},20, Idle, 20, 16 };
+			Brawler brawler{ "Jim", 100.f, 120.f, 20, Idle, 20, 16 };
 			Armour shield{ "Shield", 40, 40, 50, 100, ArmourType::Leather };
 			Armour hat{ "Tinfoil Hat", 2, 0.5f, 1, 100, ArmourType::Cardboard };
 			Armour glove1{ "Leather glove", 1, 0.23f, 1, 100, ArmourType::Leather };
@@ -442,5 +482,6 @@ namespace Inventory_UnitTests {
 
 			Assert::AreEqual(expectedName, actualName);
 		}
+	
 	};
 }
