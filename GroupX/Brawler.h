@@ -1,12 +1,12 @@
 /*
 * Brawler.h
 *
-* Version information v0.1
+* Version information v1.0
 * Authors: Oisin Cassidy
 * Date: 30/11/2017
 * Description: header file for Brawler class
-* Copyright notice
 */
+
 #pragma once
 #include "GameCharacter.h"
 #include "Weapon.h"
@@ -18,7 +18,6 @@
 #include <vector>
 
 class Brawler : public GameCharacter {
-
 private:
 	int punchDamage_;
 	int strength_;

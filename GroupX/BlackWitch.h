@@ -1,11 +1,10 @@
 /*
 * BlackWitch.h
 *
-* Version information v0.1
+* Version information v1.0
 * Authors: Oisin Cassidy
-* Date: 30/11/2017
+* Date: 20/12/2017
 * Description: header file for BlackWitch class
-* Copyright notice
 */
 
 #pragma once
@@ -19,7 +18,6 @@
 #include <vector>
 
 class BlackWitch : public GameCharacter {
-
 private:
 	int magicProficiency_;
 	int darkPower_;
@@ -29,8 +27,7 @@ public:
 	BlackWitch();
 
 	//Custom Constructor
-	BlackWitch(std::string characterName, float health, float weightLimit,
-		 int food, CharacterState state, int magicProficiency, int darkPower);
+	BlackWitch(std::string characterName, float health, float weightLimit, int food, CharacterState state, int magicProficiency, int darkPower);
 
 	void SetMagicProficiency(int magicProficiency);
 	int GetMagicProficiency() const;

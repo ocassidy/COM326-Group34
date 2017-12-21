@@ -1,5 +1,12 @@
-#pragma once
-#include <string>
+/*
+* Weapon.cpp
+*
+* Version information v1.0
+* Authors: Oisin Cassidy, Diarmuid Bryson, Chantelle Green
+* Date: 20/12/2017
+* Description: Implementation for Weapon class
+*/
+
 #include "Armour.h"
 
 Armour::Armour() {

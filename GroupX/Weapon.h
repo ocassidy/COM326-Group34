@@ -1,6 +1,16 @@
+/*
+* Weapon.h
+*
+* Version information v0.1
+* Authors: Oisin Cassidy, Diarmuid Bryson, Chantelle Green
+* Date: 24/11/2017
+* Description: header file for Weapon class
+*/
+
 #pragma once
 #include <string>
 #include "Item.h"
+
 class Weapon : public Item
 {
 private:

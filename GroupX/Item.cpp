@@ -4,8 +4,7 @@
 * Version information v1.0
 * Authors: Ciaran Moore
 * Date: 07/12/2017
-* Description: .cpp file for Item class
-* Copyright notice
+* Description: Implementation for Item class
 */
 
 #include "Item.h"

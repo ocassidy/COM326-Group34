@@ -1,3 +1,12 @@
+/*
+* Brawler.cpp
+*
+* Version information v1.0
+* Authors: Oisin Cassidy, Ciaran Moore
+* Date: 20/12/2017
+* Description: Implementation for Brawler class
+*/
+
 #include "Brawler.h"
 
 Brawler::Brawler() {
@@ -34,9 +43,6 @@ bool Brawler::Attack(GameCharacter &character) {
 	weaponHealthDeterioration = WeaponDeteriorationChance();
 	attackChance = AttackChance();
 
-	int weaponStrength = this->GetWeapon(GetEquippedWeapon()).getWeaponHitStrength();
-	int armourStrength = character.GetArmour(GetEquippedArmour()).getDefence();
-	
 	if (this->GetHealth() <= 20 || character.GetState() == Dead) {
 		hitdetect = false;
 	}
@@ -45,7 +51,7 @@ bool Brawler::Attack(GameCharacter &character) {
 		hitdetect = false;
 	}
 	else {
-		if (weaponStrength < armourStrength) {
+		if (this->GetWeapon(this->GetEquippedWeapon()).getWeaponHitStrength() < character.GetArmour(character.GetEquippedArmour()).getDefence()) {
 			if (attackChance > 0 && attackChance <= 20) {
 				hitdetect = true; //successful attack
 
@@ -74,8 +80,8 @@ bool Brawler::Attack(GameCharacter &character) {
 					character.SetHealth(newHealth);
 					break;
 				}
-				double newArmourHealth = character.GetArmour(GetEquippedArmour()).getArmourHealth() * 0.9;
-				character.GetArmour(GetEquippedArmour()).setArmourHealth((int)newArmourHealth);
+				double newArmourHealth = character.GetArmour(character.GetEquippedArmour()).getArmourHealth() * 0.9;
+				character.GetArmour(character.GetEquippedArmour()).setArmourHealth((int)newArmourHealth);
 
 
 				//removal of Armor if its health is less than or equal to 0		
@@ -92,102 +98,241 @@ bool Brawler::Attack(GameCharacter &character) {
 					}
 				}
 			}
+		}
 
-			else if (weaponStrength < armourStrength)
-			{
-				if (attackChance > 0 && attackChance <= 60) {
-					hitdetect = true; //successful attack
+		else if (this->GetWeapon(this->GetEquippedWeapon()).getWeaponHitStrength() >= character.GetArmour(character.GetEquippedArmour()).getDefence())
+		{
+			if (attackChance > 0 && attackChance <= 60) {
+				hitdetect = true; //successful attack
 
-					switch (character.GetState()) { //determining damage output
-					case Defending:
-						newHealth = character.GetHealth() * 0.9f;
-						character.SetHealth(newHealth);
-						break;
-					case Sleeping:
-						character.SetHealth(0.0f);
-						character.SetState(Dead);
-						break;
-					case Dead:
-						//no effect
-					case Walking:
-						newHealth = character.GetHealth() * 0.8f;
-						character.SetHealth(newHealth);
-						break;
-					case Running:
-						newHealth = character.GetHealth() * 0.8f;
-						character.SetHealth(newHealth);
-						break;
-					case Idle:
-						newHealth = character.GetHealth() * 0.8f;
-						character.SetHealth(newHealth);
-						break;
-					}
-					double newArmourHealth = character.GetArmour(GetEquippedArmour()).getArmourHealth() * 0.9;
-					character.GetArmour(GetEquippedArmour()).setArmourHealth((int)newArmourHealth);
+				switch (character.GetState()) { //determining damage output
+				case Defending:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				case Sleeping:
+					character.SetHealth(0.0f);
+					character.SetState(Dead);
+					break;
+				case Dead:
+					//no effect
+				case Walking:
+					newHealth = character.GetHealth() * 0.8f;
+					character.SetHealth(newHealth);
+					break;
+				case Running:
+					newHealth = character.GetHealth() * 0.8f;
+					character.SetHealth(newHealth);
+					break;
+				case Idle:
+					newHealth = character.GetHealth() * 0.8f;
+					character.SetHealth(newHealth);
+					break;
+				}
+				double newArmourHealth = character.GetArmour(character.GetEquippedArmour()).getArmourHealth() * 0.9;
+				character.GetArmour(character.GetEquippedArmour()).setArmourHealth((int)newArmourHealth);
 
 
-					//removal of Armor if its health is less than or equal to 0		
-					if (character.GetArmour(character.GetEquippedArmour()).getArmourHealth() <= 0) {
-						character.DropItem(character.GetArmour(character.GetEquippedArmour()));
-						character.SetEquippedArmour(-1);
-					}
-					else if (attackChance > 60 && attackChance <= 100) hitdetect = false;//unsuccessful attack
-					{
-						this->GetWeapon(this->GetEquippedWeapon()).setWeaponHealth(this->GetWeapon(this->GetEquippedWeapon()).getWeaponHealth() / 100 * weaponHealthDeterioration);
-						if (this->GetWeapon(this->GetEquippedWeapon()).getWeaponHealth() <= 0) {
-							this->DropItem(this->GetWeapon(this->GetEquippedWeapon()));
-							this->SetEquippedWeapon(-1);
-						}
+				//removal of Armor if its health is less than or equal to 0		
+				if (character.GetArmour(character.GetEquippedArmour()).getArmourHealth() <= 0) {
+					character.DropItem(character.GetArmour(character.GetEquippedArmour()));
+					character.SetEquippedArmour(-1);
+				}
+				if (attackChance > 60 && attackChance <= 100)  {
+					this->GetWeapon(this->GetEquippedWeapon()).setWeaponHealth(this->GetWeapon(this->GetEquippedWeapon()).getWeaponHealth() / 100 * weaponHealthDeterioration);
+					if (this->GetWeapon(this->GetEquippedWeapon()).getWeaponHealth() <= 0) {
+						this->DropItem(this->GetWeapon(this->GetEquippedWeapon()));
+						this->SetEquippedWeapon(-1);
 					}
 				}
+				hitdetect = false;
 			}
+		}
 
-			else if (character.GetEquippedArmour() == -1) {
+		else if (character.GetEquippedArmour() == -1) {
 
-				if (attackChance > 0 && attackChance <= 80) {
-					hitdetect = true;//successful attack
-					switch (character.GetState()) { //determining damage output
-					case Defending:
-						newHealth = character.GetHealth() * 0.9f;
-						character.SetHealth(newHealth);
-						break;
-					case Sleeping:
-						character.SetHealth(0.0f);
-						character.SetState(Dead);
-						break;
-					case Dead:
-						//no effect
-					case Walking:
-						newHealth = character.GetHealth() * 0.8f;
-						character.SetHealth(newHealth);
-						break;
-					case Running:
-						newHealth = character.GetHealth() * 0.8f;
-						character.SetHealth(newHealth);
-						break;
-					case Idle:
-						newHealth = character.GetHealth() * 0.8f;
-						character.SetHealth(newHealth);
-						break;
-					}
+			if (attackChance > 0 && attackChance <= 80) {
+				hitdetect = true;//successful attack
+				switch (character.GetState()) { //determining damage output
+				case Defending:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				case Sleeping:
+					character.SetHealth(0.0f);
+					character.SetState(Dead);
+					break;
+				case Dead:
+					//no effect
+				case Walking:
+					newHealth = character.GetHealth() * 0.8f;
+					character.SetHealth(newHealth);
+					break;
+				case Running:
+					newHealth = character.GetHealth() * 0.8f;
+					character.SetHealth(newHealth);
+					break;
+				case Idle:
+					newHealth = character.GetHealth() * 0.8f;
+					character.SetHealth(newHealth);
+					break;
 				}
 			}
+		}
 
-			else if (attackChance > 60 && attackChance <= 100) hitdetect = false;//unsuccessful attack
-			{
-				this->GetWeapon(this->GetEquippedWeapon()).setWeaponHealth(this->GetWeapon(this->GetEquippedWeapon()).getWeaponHealth() / 100 * weaponHealthDeterioration);
-				if (this->GetWeapon(this->GetEquippedWeapon()).getWeaponHealth() <= 0) {
-					this->DropItem(this->GetWeapon(this->GetEquippedWeapon()));
-					this->SetEquippedWeapon(-1);
-				}
+		else if (attackChance > 60 && attackChance <= 100);//unsuccessful attack
+		{
+			this->GetWeapon(this->GetEquippedWeapon()).setWeaponHealth(this->GetWeapon(this->GetEquippedWeapon()).getWeaponHealth() / 100 * weaponHealthDeterioration);
+			if (this->GetWeapon(this->GetEquippedWeapon()).getWeaponHealth() <= 0) {
+				this->DropItem(this->GetWeapon(this->GetEquippedWeapon()));
+				this->SetEquippedWeapon(-1);
 			}
+			hitdetect = false;
 		}
 	}
 	return hitdetect;
 }
 
 bool Brawler::Brawl(GameCharacter &character) {
-	return true;
+	SetState(Idle); //setting character state to idle
+
+	bool hitdetect = false;
+	float attackChance; //attack chance
+	float newHealth = 0;
+
+	attackChance = AttackChance();
+
+	if (this->GetHealth() <= 20 || character.GetState() == Dead) {
+		hitdetect = false;
+	}
+	else {
+		if (this->GetPunchDamage() < character.GetArmour(character.GetEquippedArmour()).getDefence()) {
+			if (attackChance > 0 && attackChance <= 20) {
+				hitdetect = true; //successful attack
+
+				switch (character.GetState()) { //determining damage output
+				case Defending:
+					newHealth = character.GetHealth() * 0.95f;
+					character.SetHealth(newHealth);
+					break;
+				case Sleeping:
+					character.SetHealth(0.0f);
+					character.SetState(Dead);
+					break;
+				case Dead:
+					//no effect
+					break;
+				case Walking:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				case Running:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				case Idle:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				}
+				double newArmourHealth = character.GetArmour(character.GetEquippedArmour()).getArmourHealth() * 0.95;
+				character.GetArmour(character.GetEquippedArmour()).setArmourHealth((int)newArmourHealth);
+
+
+				//removal of Armor if its health is less than or equal to 0		
+				if (character.GetArmour(character.GetEquippedArmour()).getArmourHealth() <= 0) {
+					character.DropItem(character.GetArmour(character.GetEquippedArmour()));
+					character.SetEquippedArmour(-1);
+				}
+				if (attackChance > 20 && attackChance <= 100)   //unsuccessful attack
+				{
+					hitdetect = false;
+				}
+			}
+		}
+
+		else if (this->GetPunchDamage() >= character.GetArmour(character.GetEquippedArmour()).getDefence())
+		{
+			if (attackChance > 0 && attackChance <= 60) {
+				hitdetect = true; //successful attack
+
+				switch (character.GetState()) { //determining damage output
+				case Defending:
+					newHealth = character.GetHealth() * 0.95f;
+					character.SetHealth(newHealth);
+					break;
+				case Sleeping:
+					character.SetHealth(0.0f);
+					character.SetState(Dead);
+					break;
+				case Dead:
+					//no effect
+				case Walking:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				case Running:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				case Idle:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				}
+				double newArmourHealth = character.GetArmour(character.GetEquippedArmour()).getArmourHealth() * 0.95;
+				character.GetArmour(character.GetEquippedArmour()).setArmourHealth((int)newArmourHealth);
+
+
+				//removal of Armor if its health is less than or equal to 0		
+				if (character.GetArmour(character.GetEquippedArmour()).getArmourHealth() <= 0) {
+					character.DropItem(character.GetArmour(character.GetEquippedArmour()));
+					character.SetEquippedArmour(-1);
+				}
+				if (attackChance > 60 && attackChance <= 100); //unsuccessful attack
+				{
+					hitdetect = false;
+				}
+			}
+		}
+
+		else if (character.GetEquippedArmour() == -1) {
+
+			if (attackChance > 0 && attackChance <= 80) {
+				hitdetect = true;//successful attack
+				switch (character.GetState()) { //determining damage output
+				case Defending:
+					newHealth = character.GetHealth() * 0.95f;
+					character.SetHealth(newHealth);
+					break;
+				case Sleeping:
+					character.SetHealth(0.0f);
+					character.SetState(Dead);
+					break;
+				case Dead:
+					//no effect
+				case Walking:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				case Running:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				case Idle:
+					newHealth = character.GetHealth() * 0.9f;
+					character.SetHealth(newHealth);
+					break;
+				}
+			}
+		}
+
+		else if (attackChance > 60 && attackChance <= 100) //unsuccessful attack
+		{
+			hitdetect = false;
+		}
+	}
+	return hitdetect;
 }
 
 void Brawler::Sleep() {

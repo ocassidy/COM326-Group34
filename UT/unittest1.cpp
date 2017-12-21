@@ -228,13 +228,15 @@ namespace Conflict_UnitTests
 			Cleric cleric{ "Zen", 100.f, 120.f, 20, Idle, 16 };
 			Brawler brawler{ "Jim", 100.f, 120.f, 20, Idle, 20, 16 };
 			Weapon spear{ "Spear", 15, 25.f, 200, 6 };
+			Armour glove{ "Leather glove", 3, 25.0f, 1, 0, ArmourType::Leather };
 
 			//Act
 			brawler.PickUpWeapon(spear);
 			brawler.EquipWeapon(0);
 			baseHealth = cleric.GetHealth();
-			brawler.Attack(cleric);
+			cleric.PickUpArmour(glove);
 			cleric.Defend(0);
+			brawler.Attack(cleric);
 			newHealth = cleric.GetHealth();
 
 			//Assert
@@ -246,12 +248,14 @@ namespace Conflict_UnitTests
 			float baseHealth;
 			float newHealth;
 			Cleric cleric{ "Zen", 100.f, 120.f, 20, Idle, 16 };
-			Brawler brawler{ "Jim", 100.f, 120.f, 20, Idle, 50, 16 };
+			Brawler brawler{ "Jim", 100.f, 120.f, 20, Idle, 200, 16 };
+			Armour glove{ "Leather glove", 3, 25.0f, 1, 0, ArmourType::Leather };
 
 			//Act
 			baseHealth = cleric.GetHealth();
-			brawler.Brawl(cleric);
+			cleric.PickUpArmour(glove);
 			cleric.Defend(0);
+			brawler.Brawl(cleric);
 			newHealth = cleric.GetHealth();
 
 			//Assert
@@ -259,21 +263,112 @@ namespace Conflict_UnitTests
 		}
 		TEST_METHOD(BrawlerBrawlPassFromAttack)
 		{
-			//Arrange the data		
+			// Arrange the data
 			float baseHealth;
 			float newHealth;
 			Cleric cleric{ "Zen", 100.f, 120.f, 20, Idle, 16 };
-			Brawler brawler{ "Jim", 100.f, 120.f, 20, Idle, 50, 16 };
+			Brawler brawler{ "Jim", 100.f, 120.f, 20, Idle, 200, 16 };
+			Armour glove{ "Leather glove", 3, 25.0f, 1, 0, ArmourType::Leather };
 
 			//Act
 			baseHealth = cleric.GetHealth();
-			brawler.Attack(cleric);
+			cleric.PickUpArmour(glove);
 			cleric.Defend(0);
+			brawler.Attack(cleric);
 			newHealth = cleric.GetHealth();
 
 			//Assert
 			Assert::AreNotEqual(baseHealth, newHealth);
 		}
+		TEST_METHOD(BlackWitchAttack)
+		{
+			//Arrange the data		
+			float baseHealth;
+			float newHealth;
+			Cleric cleric{ "Zen", 100.f, 120.f, 20, Idle, 16 };
+			BlackWitch blackwitch{ "Jim", 100.f, 120.f, 20, Idle, 20, 16 };
+			Weapon spear{ "Spear", 15, 25.f, 200, 6 };
+			Armour glove{ "Leather glove", 3, 25.0f, 1, 0, ArmourType::Leather };
+
+			//Act
+			blackwitch.PickUpWeapon(spear);
+			blackwitch.EquipWeapon(0);
+			baseHealth = cleric.GetHealth();
+			cleric.PickUpArmour(glove);
+			cleric.Defend(0);
+			blackwitch.Attack(cleric);
+			newHealth = cleric.GetHealth();
+
+			//Assert
+			Assert::AreNotEqual(baseHealth, newHealth);
+		}
+		TEST_METHOD(BlackWitchAttackDarkPower)
+		{
+			//Arrange the data		
+			float baseHealth;
+			float newHealth;
+			Cleric cleric{ "Zen", 100.f, 120.f, 20, Idle, 16 };
+			BlackWitch blackwitch{ "Jim", 100.f, 120.f, 20, Idle, 20, 100 };
+			Weapon spear{ "Spear", 15, 25.f, 200, 6 };
+			Armour glove{ "Leather glove", 3, 25.0f, 1, 0, ArmourType::Leather };
+
+			//Act
+			blackwitch.PickUpWeapon(spear);
+			blackwitch.EquipWeapon(0);
+			baseHealth = cleric.GetHealth();
+			cleric.PickUpArmour(glove);
+			cleric.Defend(0);
+			blackwitch.Attack(cleric);
+			newHealth = cleric.GetHealth();
+
+			//Assert
+			Assert::AreNotEqual(baseHealth, newHealth);
+		}
+		TEST_METHOD(ClericAttack)
+		{
+			//Arrange the data		
+			float baseHealth;
+			float newHealth;
+			Cleric cleric{ "Zen", 100.f, 120.f, 20, Idle, 16 };
+			BlackWitch blackwitch{ "Jim", 100.f, 120.f, 20, Idle, 20, 16 };
+			Weapon spear{ "Spear", 15, 25.f, 200, 6 };
+			Armour glove{ "Leather glove", 3, 25.0f, 1, 0, ArmourType::Leather };
+
+			//Act
+			cleric.PickUpWeapon(spear);
+			cleric.EquipWeapon(0);
+			baseHealth = blackwitch.GetHealth();
+			blackwitch.PickUpArmour(glove);
+			blackwitch.Defend(0);
+			cleric.Attack(blackwitch);
+			newHealth = blackwitch.GetHealth();
+
+			//Assert
+			Assert::AreNotEqual(baseHealth, newHealth);
+		}
+		TEST_METHOD(OrcAttack)
+		{
+			//Arrange the data		
+			float baseHealth;
+			float newHealth;
+			Orc orc{ "Jim", 100.f, 120.f, 20, Idle, 14, 16 };
+			BlackWitch blackwitch{ "Bob", 100.f, 120.f, 20, Idle, 20, 16 };
+			Weapon spear{ "Spear", 15, 25.f, 200, 6 };
+			Armour glove{ "Leather glove", 3, 25.0f, 1, 0, ArmourType::Leather };
+
+			//Act
+			orc.PickUpWeapon(spear);
+			orc.EquipWeapon(0);
+			baseHealth = blackwitch.GetHealth();
+			blackwitch.PickUpArmour(glove);
+			blackwitch.Defend(0);
+			orc.Attack(blackwitch);
+			newHealth = blackwitch.GetHealth();
+
+			//Assert
+			Assert::AreNotEqual(baseHealth, newHealth);
+		}
+
 		TEST_METHOD(BlackWitchBewitch)
 		{
 			//Arrange the data		

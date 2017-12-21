@@ -2,10 +2,9 @@
 * GameCharacter.cpp
 *
 * Version information v0.1
-* Authors: <Diarmuid Bryson - B00709477, Ciaran Moore - B00688223, Oisin Cassidy B00714881
+* Authors: Diarmuid Bryson - B00709477, Ciaran Moore - B00688223, Oisin Cassidy B00714881
 * Date: 07/12/2017
 * Description: Implementation for GameCharacter class
-* Copyright notice
 */
 
 #include "GameCharacter.h"
@@ -188,7 +187,7 @@ void GameCharacter::DropItem(Weapon &Item) {
 	}
 }
 
-bool GameCharacter::EquipWeapon(int weapon) { //like defend / need to review with unit tests
+bool GameCharacter::EquipWeapon(int weapon) { 
 	bool value = false;
 
 	if (weapon < weapons_.size() && weapon >= 0) {
@@ -202,7 +201,7 @@ bool GameCharacter::EquipWeapon(int weapon) { //like defend / need to review wit
 	return value;
 }
 
-void GameCharacter::Defend(int armour) { //need to review this
+void GameCharacter::Defend(int armour) { 
 
 	this->SetState(Defending); //setting character state to defending
 
@@ -241,8 +240,7 @@ void GameCharacter::Eat() {
 	}
 }
 
-double GameCharacter::WeaponDeteriorationChance()
-{
+double GameCharacter::WeaponDeteriorationChance() {
 	std::random_device rd; //generator 1
 	std::mt19937 gen(rd());
 	std::uniform_real_distribution<float> dis(0, 100);
@@ -252,8 +250,7 @@ double GameCharacter::WeaponDeteriorationChance()
 	return chance;
 }
 
-double GameCharacter::AttackChance()
-{
+double GameCharacter::AttackChance() {
 	std::random_device rd; //generator 2
 	std::mt19937 gen(rd());
 	std::uniform_real_distribution<double> dis(10, 20);

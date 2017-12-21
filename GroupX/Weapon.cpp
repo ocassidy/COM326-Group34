@@ -1,5 +1,13 @@
+/*
+* Weapon.cpp
+*
+* Version information v1.0
+* Authors: Oisin Cassidy, Diarmuid Bryson, Chantelle Green
+* Date: 20/12/2017
+* Description: Implementationfor Weapon class
+*/
+
 #include "Weapon.h"
-#include <string>
 
 Weapon::Weapon() {}
 

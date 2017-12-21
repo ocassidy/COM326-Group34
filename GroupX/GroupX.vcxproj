@@ -148,15 +148,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Armour.cpp" />
-    <ClCompile Include="BlackWitch Attack.cpp" />
     <ClCompile Include="BlackWitch.cpp" />
-    <ClCompile Include="Brawler Attack.cpp" />
     <ClCompile Include="Brawler.cpp" />
-    <ClCompile Include="Cleric Attack.cpp" />
     <ClCompile Include="Cleric.cpp" />
     <ClCompile Include="GameCharacter.cpp" />
     <ClCompile Include="Item.cpp" />
-    <ClCompile Include="Orc Attack.cpp" />
     <ClCompile Include="Orc.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>

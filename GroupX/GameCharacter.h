@@ -2,10 +2,9 @@
 * GameCharacter.h
 *
 * Version information v0.1
-* Authors: <Insert group member names and IDs> of student(s) who write each class
+* Authors: Diarmuid Bryson - B00709477, Ciaran Moore - B00688223, Oisin Cassidy B00714881
 * Date: 24/11/2017
 * Description: header file for GameCharacter class
-* Copyright notice
 */
 
 #pragma once
@@ -21,7 +20,6 @@
 enum CharacterState { Idle, Running, Sleeping, Walking, Defending, Dead }; //character states
 
 class GameCharacter {
-
 private:
 	std::string characterName_;
 	float health_;

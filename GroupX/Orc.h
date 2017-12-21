@@ -2,7 +2,7 @@
 * Orc.h
 *
 * Version information v0.1
-* Authors: Oisin Cassody
+* Authors: Oisin Cassidy
 * Date: 24/11/2017
 * Description: header file for Orc class
 * Copyright notice
@@ -29,8 +29,7 @@ public:
 	Orc();
 
 	//Custom Constructor
-	Orc(std::string characterName, float health, float weightLimit,
-		int food, CharacterState state, int ferociousness, int strength);
+	Orc(std::string characterName, float health, float weightLimit, int food, CharacterState state, int ferociousness, int strength);
 
 	void SetFeroiousness(int ferociousness);
 	int GetFeroiousness() const;

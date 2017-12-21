@@ -5,7 +5,6 @@
 * Authors: Oisin Cassidy
 * Date: 30/11/2017
 * Description: header file for Cleric class
-* Copyright notice
 */
 
 #pragma once
@@ -19,7 +18,6 @@
 #include <vector>
 
 class Cleric : public GameCharacter {
-
 private:
 	int pietyLevel_;
 
