@@ -9,13 +9,16 @@
 
 #include "BlackWitch.h"
 
+//default constructor
 BlackWitch::BlackWitch() {
 }
 
+//custom constructor
 BlackWitch::BlackWitch(std::string characterName, float health, float weightLimit, int food, CharacterState state, int magicProficiency, int darkPower)
 	: GameCharacter(characterName, health, weightLimit, food, state), magicProficiency_{ magicProficiency }, darkPower_{ darkPower } {
 }
 
+//getters + setters
 void BlackWitch::SetMagicProficiency(int magicProficiency) {
 	magicProficiency_ = magicProficiency;
 }
@@ -32,6 +35,7 @@ int BlackWitch::GetDarkPower() const {
 	return darkPower_;
 }
 
+//blackwitch attack
 bool BlackWitch::Attack(GameCharacter &character) {
 	SetState(Idle); //setting character state to idle
 
@@ -332,6 +336,7 @@ bool BlackWitch::Attack(GameCharacter &character) {
 	}
 }
 
+//blackwitch specific bewitch function
 void BlackWitch::Bewitch(GameCharacter &character) {
 
 	std::random_device rd; //generator 1
@@ -347,6 +352,7 @@ void BlackWitch::Bewitch(GameCharacter &character) {
 	}
 }
 
+//sleep function - increase health
 void BlackWitch::Sleep() {
 	//increase health by 15%
 	float bwhealth = this->GetHealth() * 1.15f;

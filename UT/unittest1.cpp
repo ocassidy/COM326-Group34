@@ -1,3 +1,4 @@
+//Authors: Diarmuid Bryson, Oisin Cassidy, Ciaran Moore
 #include "stdafx.h"
 #include "CppUnitTest.h"
 

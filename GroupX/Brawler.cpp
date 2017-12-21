@@ -8,14 +8,16 @@
 */
 
 #include "Brawler.h"
-
+//default constructor
 Brawler::Brawler() {
 }
 
+//custom constructor
 Brawler::Brawler(std::string characterName, float health, float weightLimit, int food, CharacterState state, int punchDamage, int strength)
 	: GameCharacter(characterName, health, weightLimit, food, state), punchDamage_{ punchDamage }, strength_{ strength } {
 }
 
+//getters + setters
 void Brawler::SetPunchDamage(int punchDamage) {
 	punchDamage_ = punchDamage;
 }
@@ -32,6 +34,7 @@ int Brawler::GetStrength() const {
 	return strength_;
 }
 
+//brawler attack logic
 bool Brawler::Attack(GameCharacter &character) {
 	SetState(Idle); //setting character state to idle
 
@@ -194,6 +197,7 @@ bool Brawler::Attack(GameCharacter &character) {
 	return hitdetect;
 }
 
+//brawler brawl function - similar to attack logic
 bool Brawler::Brawl(GameCharacter &character) {
 	SetState(Idle); //setting character state to idle
 
@@ -336,6 +340,7 @@ bool Brawler::Brawl(GameCharacter &character) {
 	return hitdetect;
 }
 
+//sleep function
 void Brawler::Sleep() {
 	//brawler 20% health increase
 	float bhealth = this->GetHealth() * 1.2f;

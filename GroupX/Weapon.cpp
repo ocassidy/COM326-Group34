@@ -9,8 +9,10 @@
 
 #include "Weapon.h"
 
+//default constructor
 Weapon::Weapon() {}
 
+//custom constructor
 Weapon::Weapon(std::string itemName, int itemValue, float weight, int hitStrength, int health) 
 	: Item(itemName, itemValue, weight), weaponHitStrength_{ hitStrength }, weaponHealth_{ health } {
 }

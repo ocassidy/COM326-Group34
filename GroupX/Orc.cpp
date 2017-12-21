@@ -9,13 +9,16 @@
 
 #include "Orc.h"
 
+//default constructor
 Orc::Orc() {
 }
 
+//custom constructor
 Orc::Orc(std::string characterName, float health, float weightLimit, int food, CharacterState state, int ferociousness, int strength) 
 	: GameCharacter(characterName, health, weightLimit, food, state), ferociousness_{ ferociousness }, strength_{ strength } {
 }
 
+//getters + setters
 void Orc::SetFeroiousness(int ferociousness) {
 	ferociousness_ = ferociousness;
 }
@@ -32,6 +35,7 @@ int Orc::GetStrength() const {
 	return strength_;
 }
 
+//orc specific attack function
 bool Orc::Attack(GameCharacter &character) {
 	SetState(Idle); //setting character state to idle
 
@@ -190,6 +194,7 @@ bool Orc::Attack(GameCharacter &character) {
 	return hitdetect;
 }
 
+//orc specific scream function
 void Orc::Scream(GameCharacter &character) {
 	
 	std::random_device rd; //generator 1

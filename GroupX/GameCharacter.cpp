@@ -16,16 +16,20 @@
 #include "Cleric.h"
 #include "Orc.h"
 
+//default constructor
 GameCharacter::GameCharacter() {
 }
 
+//custom constructor
 GameCharacter::GameCharacter(std::string characterName, float health, float weightLimit, int food, CharacterState state) :
 	characterName_{ characterName }, health_{ health }, weightLimit_{ weightLimit }, food_{ food }, state_{ state } {
 }
 
+//default destructor
 GameCharacter::~GameCharacter() {
 }
 
+//getters + setters
 void GameCharacter::SetCharacterName(std::string name) {
 	characterName_ = name;
 }
@@ -99,16 +103,19 @@ bool GameCharacter::Attack(GameCharacter &character) {
 	return true;
 }
 
+//changes character state to walking
 void GameCharacter::Walk() {
 
 	SetState(Walking);
 }
 
+//changes character state to running
 void GameCharacter::Run() {
 
 	SetState(Running);
 }
 
+//sets character state to sleeping
 void GameCharacter::Sleep() {
 
 	SetState(Sleeping);
@@ -122,6 +129,7 @@ Armour GameCharacter::GetArmour(int index) {
 	return armour_.at(index);
 }
 
+//method which calculate if an item being added will exceed weight limit, called in other function
 float GameCharacter::CalculateTotalWeight(std::vector<Armour> armour, std::vector<Weapon>weapons) {
 	float sumWeight = 0;
 
@@ -135,6 +143,7 @@ float GameCharacter::CalculateTotalWeight(std::vector<Armour> armour, std::vecto
 	return sumWeight;
 }
 
+//adds a weapon to vector if under weight limit
 bool GameCharacter::PickUpWeapon(Weapon &weapon) {
 
 	if (weapon.getWeight() + CalculateTotalWeight(armour_, weapons_) <= this->weightLimit_) {
@@ -146,6 +155,7 @@ bool GameCharacter::PickUpWeapon(Weapon &weapon) {
 	}
 }
 
+//adds armour to vector if under weight limit
 bool GameCharacter::PickUpArmour(Armour &Armour) {
 
 	if (Armour.getWeight() + CalculateTotalWeight(armour_, weapons_) <= this->weightLimit_) {
@@ -187,6 +197,7 @@ void GameCharacter::DropItem(Weapon &Item) {
 	}
 }
 
+//equips a weapon from the vector to allow character to attack
 bool GameCharacter::EquipWeapon(int weapon) { 
 	bool value = false;
 
@@ -201,6 +212,7 @@ bool GameCharacter::EquipWeapon(int weapon) {
 	return value;
 }
 
+//sets state to defend and allows character to defend against incoming attacks
 void GameCharacter::Defend(int armour) { 
 
 	if (this->GetState() == Dead) {
@@ -218,10 +230,12 @@ void GameCharacter::Defend(int armour) {
 	}
 }
 
+//adds food for the character
 void GameCharacter::AddFood(int amount) {
 	food_ = food_ + amount;
 }
 
+//consumes food and updates health accordingly
 void GameCharacter::Eat() {
 
 	float foodate = food_ * 0.2f;
@@ -245,6 +259,7 @@ void GameCharacter::Eat() {
 	}
 }
 
+//calculates the chance of weapon health being reduced
 double GameCharacter::WeaponDeteriorationChance() {
 	std::random_device rd; //generator 1
 	std::mt19937 gen(rd());
@@ -255,6 +270,7 @@ double GameCharacter::WeaponDeteriorationChance() {
 	return chance;
 }
 
+//calculates the chance of an attack
 double GameCharacter::AttackChance() {
 	std::random_device rd; //generator 2
 	std::mt19937 gen(rd());

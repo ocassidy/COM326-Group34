@@ -9,13 +9,16 @@
 
 #include "Cleric.h"
 
+// default constructor
 Cleric::Cleric() {
 }
 
+//custom constructor
 Cleric::Cleric(std::string characterName, float health, float weightLimit,  int food, CharacterState state, int pietyLevel) 
 	: GameCharacter(characterName, health, weightLimit, food, state), pietyLevel_{ pietyLevel } {
 }
 
+//getter + setter
 void Cleric::SetPietyLevel(int pietyLevel) {
 	pietyLevel_ = pietyLevel;
 }
@@ -24,6 +27,7 @@ int Cleric::GetPietyLevel() const {
 	return pietyLevel_;
 }
 
+//cleric attack logic
 bool Cleric::Attack(GameCharacter &character) {
 	SetState(Idle); //setting character state to idle
 
@@ -182,6 +186,7 @@ bool Cleric::Attack(GameCharacter &character) {
 	return hitdetect;
 }
 
+//cleric pray for method
 void Cleric::PrayFor(GameCharacter &character) {
 	
 	std::random_device rd; //generator 1
@@ -200,6 +205,7 @@ void Cleric::PrayFor(GameCharacter &character) {
 	}
 }
 
+//sleep function
 void Cleric::Sleep() {
 	//cleric 20% health increase
 	float chealth = this->GetHealth() * 1.2;

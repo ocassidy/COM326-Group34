@@ -2,16 +2,18 @@
 * Item.cpp
 *
 * Version information v1.0
-* Authors: Ciaran Moore
+* Authors: Ciaran Moore, Chantelle Green
 * Date: 07/12/2017
 * Description: Implementation for Item class
 */
 
 #include "Item.h"
 
+//default constructor
 Item::Item () {
 }
 
+//custom constructor
 Item::Item(std::string itemName, int itemValue, float weight) : itemName_{ itemName }, itemValue_{ itemValue }, weight_{ weight } {
 }
 

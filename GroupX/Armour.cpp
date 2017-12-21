@@ -8,10 +8,11 @@
 */
 
 #include "Armour.h"
-
+//default constructor
 Armour::Armour() {
 }
 
+//custom constructor
 Armour::Armour(std::string itemName, int itemValue, float weight, int armourHealth, int defence, ArmourType ArmourType)
 	:Item(itemName, itemValue, weight), armourHealth_{ armourHealth }, defence_{ defence }, ArmourType_{ ArmourType } {
 }
