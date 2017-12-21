@@ -242,20 +242,74 @@ namespace Conflict_UnitTests
 			//Assert
 			Assert::AreNotEqual(baseHealth, newHealth);
 		}
+		TEST_METHOD(CharacterKill)
+		{
+			//Arrange the data		
+			int expectedState{ 5 }, actualState;
+			Cleric cleric{ "Zen", 100.f, 120.f, 20, Idle, 16 };
+			BlackWitch blackwitch{ "Jim", 100.f, 120.f, 20, Idle, 20, 100 };
+			Weapon spear{ "Spear", 15, 25.f, 200, 6 };
+			Armour glove{ "Leather glove", 3, 25.0f, 1, 0, ArmourType::Leather };
+
+			//Act
+			blackwitch.PickUpWeapon(spear);
+			blackwitch.EquipWeapon(0);
+			cleric.PickUpArmour(glove);
+			cleric.Defend(0);
+			blackwitch.Attack(cleric);
+			blackwitch.Attack(cleric);
+			blackwitch.Attack(cleric);
+			blackwitch.Attack(cleric);
+			blackwitch.Attack(cleric);
+			blackwitch.Attack(cleric);
+			blackwitch.Attack(cleric);
+			blackwitch.Attack(cleric);
+			blackwitch.Attack(cleric);
+			blackwitch.Attack(cleric);
+			blackwitch.Attack(cleric);
+			blackwitch.Attack(cleric);
+			blackwitch.Attack(cleric);
+			blackwitch.Attack(cleric);
+			actualState = cleric.GetState();
+
+			//Assert
+			Assert::AreEqual(expectedState, actualState);
+		}
+		TEST_METHOD(AttackDeadCharacter)
+		{
+			//Arrange the data		
+			Cleric cleric{ "Zen", 100.f, 120.f, 20, Dead, 16 };
+			BlackWitch blackwitch{ "Jim", 100.f, 120.f, 20, Idle, 20, 100 };
+			Weapon spear{ "Spear", 15, 25.f, 200, 6 };
+			Armour glove{ "Leather glove", 3, 25.0f, 1, 0, ArmourType::Leather };
+
+			//Act
+			blackwitch.PickUpWeapon(spear);
+			blackwitch.EquipWeapon(0);
+			cleric.PickUpArmour(glove);
+			cleric.Defend(0);		
+			bool attackFail = blackwitch.Attack(cleric);
+
+			//Assert
+			Assert::IsFalse(attackFail);
+		}
 		TEST_METHOD(BrawlerBrawl)
 		{
 			//Arrange the data		
 			float baseHealth;
 			float newHealth;
 			Cleric cleric{ "Zen", 100.f, 120.f, 20, Idle, 16 };
-			Brawler brawler{ "Jim", 100.f, 120.f, 20, Idle, 200, 16 };
+			BlackWitch blackwitch{ "Jim", 100.f, 120.f, 20, Idle, 20, 16 };
+			Weapon spear{ "Spear", 15, 25.f, 200, 6 };
 			Armour glove{ "Leather glove", 3, 25.0f, 1, 0, ArmourType::Leather };
 
 			//Act
+			blackwitch.PickUpWeapon(spear);
+			blackwitch.EquipWeapon(0);
 			baseHealth = cleric.GetHealth();
 			cleric.PickUpArmour(glove);
 			cleric.Defend(0);
-			brawler.Brawl(cleric);
+			blackwitch.Attack(cleric);
 			newHealth = cleric.GetHealth();
 
 			//Assert

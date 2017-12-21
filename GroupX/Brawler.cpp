@@ -45,6 +45,7 @@ bool Brawler::Attack(GameCharacter &character) {
 
 	if (this->GetHealth() <= 20 || character.GetState() == Dead) {
 		hitdetect = false;
+		return hitdetect;
 	}
 	else if (this->GetEquippedWeapon() == -1) {
 		Brawl(character);

@@ -203,13 +203,18 @@ bool GameCharacter::EquipWeapon(int weapon) {
 
 void GameCharacter::Defend(int armour) { 
 
-	this->SetState(Defending); //setting character state to defending
+	if (this->GetState() == Dead) {
 
-	if (armour < armour_.size() && armour >= 0) {
-		this->equippedArmour_ = armour;
 	}
 	else {
-		this->equippedArmour_ = -1;
+		this->SetState(Defending); //setting character state to defending
+
+		if (armour < armour_.size() && armour >= 0) {
+			this->equippedArmour_ = armour;
+		}
+		else {
+			this->equippedArmour_ = -1;
+		}
 	}
 }
 

@@ -45,6 +45,7 @@ bool BlackWitch::Attack(GameCharacter &character) {
 
 	if (this->GetEquippedWeapon() == -1 || this->GetHealth() <= 20 || character.GetState() == Dead) {
 		hitdetect = false;
+		return hitdetect;
 	}
 	else {
 		if (GetDarkPower() >= 100) {

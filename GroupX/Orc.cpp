@@ -45,6 +45,7 @@ bool Orc::Attack(GameCharacter &character) {
 
 	if (this->GetEquippedWeapon() == -1 || this->GetHealth() <= 20 || character.GetState() == Dead) {
 		hitdetect = false;
+		return hitdetect;
 	}
 	else {
 		if (this->GetWeapon(this->GetEquippedWeapon()).getWeaponHitStrength() < character.GetArmour(character.GetEquippedArmour()).getDefence()) {
