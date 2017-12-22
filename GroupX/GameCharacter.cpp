@@ -260,7 +260,7 @@ void GameCharacter::Eat() {
 }
 
 //calculates the chance of weapon health being reduced
-double GameCharacter::WeaponDeteriorationChance() {
+double GameCharacter::AttackChance() {
 	std::random_device rd; //generator 1
 	std::mt19937 gen(rd());
 	std::uniform_real_distribution<float> dis(0, 100);
@@ -271,7 +271,7 @@ double GameCharacter::WeaponDeteriorationChance() {
 }
 
 //calculates the chance of an attack
-double GameCharacter::AttackChance() {
+double GameCharacter::WeaponDeteriorationChance() {
 	std::random_device rd; //generator 2
 	std::mt19937 gen(rd());
 	std::uniform_real_distribution<double> dis(10, 20);

@@ -271,6 +271,10 @@ namespace Conflict_UnitTests
 			blackwitch.Attack(cleric);
 			blackwitch.Attack(cleric);
 			blackwitch.Attack(cleric);
+			blackwitch.Attack(cleric);
+			blackwitch.Attack(cleric);
+			blackwitch.Attack(cleric);
+			blackwitch.Attack(cleric);
 			actualState = cleric.GetState();
 
 			//Assert
